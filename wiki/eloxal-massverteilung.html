@@ -1,0 +1,1419 @@
+<title>Eloxal Maßverteilung</title>
+
+<style>
+/* ============================================================
+   TOKENS — light lives on bare :root; dark redefines tokens only
+   ============================================================ */
+:root{
+  --ground:#EDF0F1;
+  --surface:#FFFFFF;
+  --surface-2:#F6F8F8;
+  --ink:#10171A;
+  --ink-2:#566469;
+  --ink-3:#8A979C;
+  --rule:#D8DFE1;
+  --rule-2:#E9EEEF;
+  --accent:#0B7386;
+  --on-accent:#FFFFFF;
+  --accent-wash:#E2F1F4;
+  --oxide:#7CCBD6;
+  --oxide-2:#4EAFBE;
+  --oxide-3:#2E8FA1;
+  --metal-a:#E3E7E9;
+  --metal-b:#B4BEC3;
+  --metal-c:#98A4AA;
+  --warn:#A2610D;
+  --warn-wash:#FAF1E2;
+  --warn-rule:#E4CDA4;
+  --good:#1F6B55;
+  --bad:#A33224;
+  --shadow:0 1px 2px rgba(16,23,26,.05), 0 8px 24px -12px rgba(16,23,26,.18);
+
+  --f-display:-apple-system,BlinkMacSystemFont,"Segoe UI Variable Display","Segoe UI",system-ui,"Helvetica Neue",Arial,sans-serif;
+  --f-body:-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",system-ui,"Helvetica Neue",Arial,sans-serif;
+  --f-mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Mono","Roboto Mono",Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1417;
+    --surface:#161E22;
+    --surface-2:#1B252A;
+    --ink:#E7EEF0;
+    --ink-2:#9AAAB0;
+    --ink-3:#7A8B92;
+    --rule:#26333A;
+    --rule-2:#1F2A30;
+    --accent:#45BACE;
+    --on-accent:#08171B;
+    --accent-wash:#123039;
+    --oxide:#3E93A3;
+    --oxide-2:#59ADBC;
+    --oxide-3:#8AD6E4;
+    --metal-a:#4E5A61;
+    --metal-b:#39444A;
+    --metal-c:#6B7A81;
+    --warn:#D9A253;
+    --warn-wash:#2B2313;
+    --warn-rule:#5B4A26;
+    --good:#5CBF9B;
+    --bad:#E38C7C;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1417;
+  --surface:#161E22;
+  --surface-2:#1B252A;
+  --ink:#E7EEF0;
+  --ink-2:#9AAAB0;
+  --ink-3:#7A8B92;
+  --rule:#26333A;
+  --rule-2:#1F2A30;
+  --accent:#45BACE;
+  --on-accent:#08171B;
+  --accent-wash:#123039;
+  --oxide:#3E93A3;
+  --oxide-2:#59ADBC;
+  --oxide-3:#8AD6E4;
+  --metal-a:#4E5A61;
+  --metal-b:#39444A;
+  --metal-c:#6B7A81;
+  --warn:#D9A253;
+  --warn-wash:#2B2313;
+  --warn-rule:#5B4A26;
+  --good:#5CBF9B;
+  --bad:#E38C7C;
+  --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+/* ============================================================
+   LANGUAGE SWITCH — German is the no-JS default
+   ============================================================ */
+:root:not([data-lang="en"]) [lang="en"]{display:none !important}
+:root[data-lang="en"] [lang="de"]{display:none !important}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px}
+
+/* Brushed-metal grain: the subject's own surface, dialled right down */
+.hero{
+  position:relative;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(127,127,127,.045) 0 1px,
+      rgba(127,127,127,0) 1px 3px),
+    linear-gradient(180deg, var(--surface-2) 0%, var(--ground) 100%);
+  border-bottom:1px solid var(--rule);
+  padding:0 0 10px;
+}
+
+.bar{
+  position:sticky;top:0;z-index:20;
+  display:flex;justify-content:flex-end;align-items:center;
+  padding:12px 0 4px;
+}
+.seg{display:flex;border:1px solid var(--rule);background:var(--surface)}
+.seg button{
+  appearance:none;border:0;background:transparent;cursor:pointer;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);padding:8px 14px;line-height:1;
+}
+.seg button + button{border-left:1px solid var(--rule)}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+:where(button,a):focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.eyebrow{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{
+  content:"";width:26px;height:1px;background:var(--accent);
+  box-shadow:0 -3px 0 -1px var(--accent), 0 3px 0 -1px var(--accent);
+}
+h1{
+  font-family:var(--f-display);
+  font-size:clamp(30px,5.2vw,50px);
+  font-weight:800;letter-spacing:-.025em;line-height:1.08;
+  margin:0 0 12px;text-wrap:balance;
+}
+.lede{
+  font-size:clamp(17px,2.1vw,21px);color:var(--ink-2);
+  max-width:62ch;margin:0 0 34px;line-height:1.5;
+}
+.hero-head{padding:26px 0 0}
+
+main{padding:8px 0 0}
+section{padding:46px 0 0}
+section > h2{
+  font-family:var(--f-display);
+  font-size:clamp(23px,3vw,30px);font-weight:800;letter-spacing:-.02em;
+  margin:0 0 10px;line-height:1.2;text-wrap:balance;
+}
+.sec-label{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 14px;
+  padding-bottom:10px;border-bottom:1px solid var(--rule);
+}
+p{margin:0 0 16px;max-width:68ch}
+strong{font-weight:650;color:var(--ink)}
+em{font-style:normal;color:var(--accent);font-weight:600}
+ul,ol{margin:0 0 18px;padding-left:22px;max-width:68ch}
+li{margin:0 0 9px}
+li::marker{color:var(--ink-3)}
+h3{
+  font-family:var(--f-display);font-size:18px;font-weight:700;letter-spacing:-.01em;
+  margin:30px 0 8px;
+}
+a{color:var(--accent)}
+
+/* key figures */
+.keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:0 0 4px}
+.key{background:var(--surface);padding:20px 20px 18px}
+.key .n{font-family:var(--f-mono);font-size:32px;font-weight:600;color:var(--accent);
+  letter-spacing:-.03em;display:block;line-height:1.1;font-variant-numeric:tabular-nums}
+.key .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);margin:9px 0 5px}
+.key .d{font-size:14.5px;color:var(--ink-2);line-height:1.45;margin:0}
+
+/* figures */
+figure{margin:26px 0 30px;background:var(--surface);border:1px solid var(--rule);padding:22px 22px 0}
+figure.bare{background:none;border:0;padding:0}
+.svgbox{overflow-x:auto}
+.svgbox svg{display:block;width:100%;min-width:560px;max-width:100%;height:auto}
+figcaption{
+  font-size:14px;color:var(--ink-2);line-height:1.55;
+  border-top:1px solid var(--rule-2);margin-top:16px;padding:14px 0 20px;max-width:78ch;
+}
+figcaption b{color:var(--ink);font-weight:650}
+figure.bare figcaption{border-top-color:var(--rule)}
+
+/* svg paint (kept in the page stylesheet, not inside the SVG) */
+.s-metal{fill:url(#gMetal)}
+.s-metal-2{fill:url(#gMetal2)}
+.s-oxide{fill:url(#gOxide)}
+.s-metal-f{fill:var(--metal-a)}
+.s-oxide-f{fill:var(--oxide)}
+.s-hole{fill:var(--surface)}
+.s-barrier{fill:var(--oxide-3)}
+.s-line{stroke:var(--accent);fill:none;stroke-width:1.6}
+.s-thin{stroke:var(--ink-3);fill:none;stroke-width:1}
+.s-dash{stroke:var(--ink);fill:none;stroke-width:1.6;stroke-dasharray:12 7}
+.s-dash-2{stroke:var(--ink-2);fill:none;stroke-width:1.4;stroke-dasharray:7 5}
+.s-edge{stroke:var(--metal-c);fill:none;stroke-width:1.2}
+.s-oxedge{stroke:var(--oxide-3);fill:none;stroke-width:1.4}
+.s-t{fill:var(--ink);font-family:var(--f-body);font-size:16px}
+.s-t-a{fill:var(--accent);font-family:var(--f-body);font-size:16px;font-weight:600}
+.s-t-s{fill:var(--ink-2);font-family:var(--f-body);font-size:13.5px}
+.s-t-m{fill:var(--accent);font-family:var(--f-mono);font-size:14px;font-variant-numeric:tabular-nums}
+.s-t-lbl{fill:var(--ink-3);font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.s-good{stroke:var(--good);fill:none;stroke-width:2}
+.s-bad{stroke:var(--bad);fill:none;stroke-width:2}
+.s-band{fill:var(--accent-wash);stroke:var(--accent);stroke-width:1.2}
+
+/* tables */
+.tablebox{overflow-x:auto;margin:22px 0 8px;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-variant-numeric:tabular-nums}
+th,td{padding:11px 16px;text-align:right;border-bottom:1px solid var(--rule-2);font-size:15px}
+th:first-child,td:first-child{text-align:left}
+thead th{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);font-size:11px;
+  border-bottom:1px solid var(--rule);vertical-align:bottom;line-height:1.45;
+}
+tbody td{font-family:var(--f-mono);font-size:14.5px}
+tbody td.txt{font-family:var(--f-body);text-align:left;font-size:14.5px;line-height:1.5}
+tbody td:first-child{font-weight:600;color:var(--ink)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.hi td{background:var(--accent-wash)}
+tbody tr.grp td{
+  background:var(--surface-2);font-family:var(--f-mono);font-size:10.5px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);text-align:left;
+  padding-top:9px;padding-bottom:9px;font-weight:500;
+}
+.pos{color:var(--accent)}
+.neg{color:var(--warn)}
+.tnote{font-size:13.5px;color:var(--ink-3);margin:12px 0 0;max-width:76ch;line-height:1.55}
+.tnote strong{color:var(--ink-2)}
+
+/* callouts */
+.note{
+  border-left:3px solid var(--accent);background:var(--surface);
+  padding:18px 22px;margin:24px 0;box-shadow:var(--shadow);
+}
+.note.house{
+  border-left-color:var(--warn);background:var(--warn-wash);
+  border-top:1px solid var(--warn-rule);border-right:1px solid var(--warn-rule);
+  border-bottom:1px solid var(--warn-rule);
+}
+.note h4{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 10px;font-weight:600;
+}
+.note.house h4{color:var(--warn)}
+.note p,.note ul{max-width:72ch}
+.note > *:last-child{margin-bottom:0}
+
+/* formula block */
+.formula{
+  background:var(--surface);border:1px solid var(--rule);
+  padding:20px 22px;margin:22px 0;font-family:var(--f-mono);
+  font-size:15px;line-height:2.1;font-variant-numeric:tabular-nums;overflow-x:auto;
+}
+.formula .row{white-space:nowrap}
+.formula .lhs{color:var(--accent);font-weight:600}
+.formula .op{color:var(--ink-3);padding:0 2px}
+.formula .cmt{color:var(--ink-3);font-size:13px}
+
+/* worked examples */
+.exs{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:18px;margin:24px 0}
+.ex{background:var(--surface);border:1px solid var(--rule);padding:20px 22px 18px}
+.ex h4{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 4px;font-weight:500;
+}
+.ex .title{font-family:var(--f-display);font-weight:700;font-size:17px;margin:0 0 14px;letter-spacing:-.01em}
+.ex .title span{color:var(--ink-3);font-weight:400;font-family:var(--f-mono);font-size:14px}
+.ex dl{margin:0;display:grid;grid-template-columns:1fr auto;font-variant-numeric:tabular-nums}
+.ex dt{font-size:14.5px;color:var(--ink-2);padding:8px 12px 8px 0;border-bottom:1px solid var(--rule-2)}
+.ex dd{margin:0;font-family:var(--f-mono);font-size:14.5px;text-align:right;padding:8px 0;
+  border-bottom:1px solid var(--rule-2);white-space:nowrap}
+.ex dt.sum,.ex dd.sum{border-bottom:0;border-top:1.5px solid var(--accent);
+  font-weight:650;color:var(--accent);padding-top:10px}
+
+/* checklist */
+.check{list-style:none;padding:0;margin:22px 0;max-width:76ch}
+.check li{
+  position:relative;padding:0 0 14px 32px;margin:0 0 14px;
+  border-bottom:1px solid var(--rule-2);
+}
+.check li:last-child{border-bottom:0;padding-bottom:0}
+.check li::before{
+  content:"";position:absolute;left:2px;top:7px;width:13px;height:13px;
+  border:1.5px solid var(--accent);
+}
+.check b{display:block;font-weight:650;margin-bottom:2px}
+.check span{color:var(--ink-2);font-size:15px}
+
+/* process chain — a genuine sequence, so it carries numbers */
+.chain{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:24px 0 8px}
+.step{background:var(--surface);border:1px solid var(--rule);border-top:2px solid var(--accent);padding:16px 18px}
+.step .no{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:7px}
+.step b{display:block;font-size:15.5px;font-weight:650;margin-bottom:4px;letter-spacing:-.01em}
+.step .txt{font-size:14px;color:var(--ink-2);line-height:1.45;display:block}
+.step .eff{font-family:var(--f-mono);font-size:12px;color:var(--ink-3);margin-top:9px;display:block}
+
+footer{
+  margin-top:64px;border-top:1px solid var(--rule);background:var(--surface-2);
+  padding:28px 0 48px;
+}
+footer p{font-size:13.5px;color:var(--ink-3);max-width:78ch;margin:0;line-height:1.6}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:0 18px}
+  figure{padding:16px 16px 0}
+}
+@media print{
+  .bar{display:none}
+  body{background:#fff}
+  figure,.note,.ex,.step,.tablebox{break-inside:avoid}
+}
+</style>
+
+<div class="hero">
+  <div class="wrap">
+
+    <div class="bar">
+      <div class="seg" role="group" aria-label="Sprache / Language">
+        <button type="button" id="btn-de" aria-pressed="true">Deutsch</button>
+        <button type="button" id="btn-en" aria-pressed="false">English</button>
+      </div>
+    </div>
+
+    <div class="hero-head">
+      <p class="eyebrow">
+        <span lang="de">Wiki · Eloxal · Maßhaltigkeit</span>
+        <span lang="en">Wiki · Anodizing · Dimensional control</span>
+      </p>
+      <h1>
+        <span lang="de">Eloxalschicht — Maßprinzip</span>
+        <span lang="en">The anodic layer — how it moves dimensions</span>
+      </h1>
+      <p class="lede">
+        <span lang="de">Eine Eloxalschicht wird nicht aufgetragen, sie wird aus dem Bauteil heraus
+        gebildet. Rund zwei Drittel wachsen in das Aluminium hinein, ein Drittel baut über der
+        Anlieferoberfläche auf. Was das für Wellen, Bohrungen, Passungen und die Vorfertigung
+        bedeutet.</span>
+        <span lang="en">An anodic layer is not applied, it is grown out of the part itself. Roughly
+        two thirds grow into the aluminium, one third builds up above the as-delivered surface.
+        Here is what that means for shafts, bores, fits and pre-machining.</span>
+      </p>
+    </div>
+
+    <!-- ============================================================
+         FIGURE 1 — cross-section through the layer
+         ============================================================ -->
+    <figure class="bare numfmt">
+      <div class="svgbox">
+      <svg viewBox="60 0 1245 690" role="img"
+           aria-label="Querschnitt durch eine 15 Mikrometer dicke Eloxalschicht: 10 Mikrometer wachsen als Einwuchs unter die Anlieferoberfläche, 5 Mikrometer bauen darüber auf.">
+        <defs>
+          <linearGradient id="gMetal" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--metal-a)"/>
+            <stop offset="100%" stop-color="var(--metal-b)"/>
+          </linearGradient>
+          <linearGradient id="gMetal2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="var(--metal-b)"/>
+            <stop offset="100%" stop-color="var(--metal-c)"/>
+          </linearGradient>
+          <linearGradient id="gOxide" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--oxide-2)"/>
+            <stop offset="100%" stop-color="var(--oxide)"/>
+          </linearGradient>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+          </marker>
+          <clipPath id="lens"><circle cx="990" cy="340" r="300"/></clipPath>
+        </defs>
+
+        <!-- ---------- stepped part, dimetric ---------- -->
+        <polygon points="90,310 90,580 460,580 460,430 280,430 280,310" class="s-metal"/>
+        <polygon points="460,430 460,580 580,520 580,370" class="s-metal-2"/>
+        <polygon points="90,310 280,310 400,250 210,250" class="s-oxide"/>
+        <polygon points="280,430 460,430 580,370 400,370" class="s-oxide"/>
+        <polygon points="280,310 280,430 400,370 400,250" class="s-oxide" opacity=".8"/>
+        <ellipse cx="248" cy="283" rx="46" ry="23" fill="var(--metal-c)"/>
+        <ellipse cx="248" cy="295" rx="39" ry="19" fill="var(--metal-b)"/>
+        <ellipse cx="248" cy="283" rx="46" ry="23" class="s-oxedge"/>
+        <polyline points="90,580 90,310 210,250 400,250 400,370 580,370 580,520 460,580 90,580" class="s-edge"/>
+        <polyline points="90,310 280,310 280,430 460,430 460,580" class="s-edge"/>
+        <polyline points="280,310 400,250" class="s-edge"/>
+        <polyline points="280,430 400,370" class="s-edge"/>
+        <polyline points="460,430 580,370" class="s-edge"/>
+
+        <text x="90" y="638" class="s-t-lbl" lang="de">Bauteil, angeschnitten</text>
+        <text x="90" y="638" class="s-t-lbl" lang="en">Part, sectioned</text>
+        <text x="90" y="662" class="s-t-s" lang="de">blaue Flächen = eloxiert · graue Flächen = Schnitt</text>
+        <text x="90" y="662" class="s-t-s" lang="en">blue faces = anodized · grey faces = cut</text>
+
+        <!-- ---------- leader into the lens ---------- -->
+        <circle cx="472" cy="398" r="16" class="s-line"/>
+        <line x1="487" y1="393" x2="692" y2="318" class="s-line" stroke-width="1.4"/>
+
+        <!-- ---------- detail lens ---------- -->
+        <circle cx="990" cy="340" r="300" fill="var(--surface)"/>
+        <g clip-path="url(#lens)">
+          <!-- 20 px per µm: coating 170–470, datum 270, metal below -->
+          <rect x="680" y="470" width="280" height="200" class="s-metal"/>
+          <rect x="680" y="170" width="280" height="300" class="s-oxide"/>
+          <!-- porous columnar structure, below the datum -->
+          <g stroke="var(--surface)" stroke-width="2" opacity=".45">
+            <line x1="700" y1="282" x2="700" y2="452"/><line x1="722" y1="282" x2="722" y2="452"/>
+            <line x1="744" y1="282" x2="744" y2="452"/><line x1="766" y1="282" x2="766" y2="452"/>
+            <line x1="788" y1="282" x2="788" y2="452"/><line x1="810" y1="282" x2="810" y2="452"/>
+            <line x1="832" y1="282" x2="832" y2="452"/><line x1="854" y1="282" x2="854" y2="452"/>
+            <line x1="876" y1="282" x2="876" y2="452"/><line x1="898" y1="282" x2="898" y2="452"/>
+            <line x1="920" y1="282" x2="920" y2="452"/><line x1="942" y1="282" x2="942" y2="452"/>
+          </g>
+          <!-- open cell structure, above the datum -->
+          <g fill="var(--surface)" opacity=".38">
+            <circle cx="698" cy="196" r="9"/><circle cx="730" cy="214" r="7"/><circle cx="758" cy="190" r="10"/>
+            <circle cx="792" cy="212" r="8"/><circle cx="824" cy="192" r="9"/><circle cx="856" cy="214" r="7"/>
+            <circle cx="886" cy="194" r="10"/><circle cx="920" cy="212" r="7"/><circle cx="950" cy="192" r="9"/>
+            <circle cx="712" cy="240" r="6"/><circle cx="748" cy="252" r="8"/><circle cx="782" cy="238" r="6"/>
+            <circle cx="814" cy="254" r="7"/><circle cx="848" cy="240" r="6"/><circle cx="880" cy="252" r="8"/>
+            <circle cx="914" cy="238" r="6"/><circle cx="946" cy="252" r="7"/>
+            <circle cx="700" cy="178" r="5"/><circle cx="776" cy="176" r="5"/><circle cx="850" cy="177" r="5"/>
+            <circle cx="920" cy="176" r="5"/>
+          </g>
+          <rect x="680" y="458" width="280" height="12" class="s-barrier"/>
+          <g stroke="var(--metal-c)" stroke-width="1.2" opacity=".4">
+            <line x1="680" y1="492" x2="960" y2="492"/><line x1="680" y1="514" x2="960" y2="514"/>
+            <line x1="680" y1="536" x2="960" y2="536"/><line x1="680" y1="558" x2="960" y2="558"/>
+            <line x1="680" y1="580" x2="960" y2="580"/><line x1="680" y1="602" x2="960" y2="602"/>
+            <line x1="680" y1="624" x2="960" y2="624"/><line x1="680" y1="646" x2="960" y2="646"/>
+          </g>
+          <line x1="680" y1="470" x2="960" y2="470" class="s-edge"/>
+          <line x1="960" y1="170" x2="960" y2="660" class="s-edge"/>
+        </g>
+        <circle cx="990" cy="340" r="300" fill="none" stroke="var(--accent)" stroke-width="2"/>
+
+        <!-- reference datum -->
+        <line x1="700" y1="270" x2="990" y2="270" class="s-dash"/>
+        <text x="998" y="266" class="s-t" lang="de">Anlieferoberfläche = 0</text>
+        <text x="998" y="266" class="s-t" lang="en">As-delivered surface = 0</text>
+
+        <!-- 1/3 build-up -->
+        <line x1="982" y1="172" x2="982" y2="268" class="s-line" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <line x1="940" y1="170" x2="1190" y2="170" class="s-thin" stroke-dasharray="4 4"/>
+        <text x="998" y="208" class="s-t-a" lang="de">1/3 Aufbau</text>
+        <text x="998" y="208" class="s-t-a" lang="en">1/3 build-up</text>
+        <text x="998" y="228" class="s-t-m">= 5 µm</text>
+
+        <!-- 2/3 penetration -->
+        <line x1="982" y1="272" x2="982" y2="468" class="s-line" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <line x1="940" y1="470" x2="1190" y2="470" class="s-thin" stroke-dasharray="4 4"/>
+        <text x="998" y="358" class="s-t-a" lang="de">2/3 Einwuchs</text>
+        <text x="998" y="358" class="s-t-a" lang="en">2/3 penetration</text>
+        <text x="998" y="378" class="s-t-m">= 10 µm</text>
+
+        <!-- total -->
+        <line x1="1180" y1="170" x2="1180" y2="470" class="s-line" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <text x="1180" y="505" class="s-t-s" font-size="11.5" text-anchor="middle" lang="de">Gesamtschichtdicke</text>
+        <text x="1180" y="505" class="s-t-s" font-size="11.5" text-anchor="middle" lang="en">Total layer thickness</text>
+        <text x="1180" y="524" class="s-t-m" text-anchor="middle">= 15 µm</text>
+
+        <!-- callouts -->
+        <text x="800" y="118" class="s-t-a" lang="de">Eloxalschicht</text>
+        <text x="800" y="118" class="s-t-a" lang="en">Anodic layer</text>
+        <polyline points="824,130 824,150 852,168" class="s-line" stroke-width="1.3"/>
+
+        <line x1="960" y1="464" x2="1006" y2="556" class="s-thin"/>
+        <text x="1014" y="552" class="s-t-s" lang="de">Sperrschicht</text>
+        <text x="1014" y="552" class="s-t-s" lang="en">Barrier layer</text>
+
+        <circle cx="900" cy="570" r="4" fill="var(--ink-2)"/>
+        <line x1="904" y1="570" x2="990" y2="592" class="s-thin"/>
+        <text x="998" y="588" class="s-t-s" lang="de">Aluminium-</text>
+        <text x="998" y="588" class="s-t-s" lang="en">Aluminium</text>
+        <text x="998" y="605" class="s-t-s" lang="de">Grundwerkstoff</text>
+        <text x="998" y="605" class="s-t-s" lang="en">base material</text>
+      </svg>
+      </div>
+      <figcaption>
+        <span lang="de"><b>Maßprinzip bei 15 µm Schichtdicke.</b> Die Anlieferoberfläche ist der
+        Nullpunkt. 10 µm Aluminium werden verbraucht und in Oxid umgewandelt; das Oxid braucht mehr
+        Volumen und steht 5 µm über. Maßwirksam nach außen ist deshalb nur <b>ein Drittel</b> der
+        gemessenen Schichtdicke — und zwar je Fläche.</span>
+        <span lang="en"><b>Dimensional principle at 15 µm layer thickness.</b> The as-delivered
+        surface is the zero datum. 10 µm of aluminium is consumed and converted into oxide; the
+        oxide occupies more volume and stands 5 µm proud. Only <b>one third</b> of the measured
+        layer thickness is therefore dimensionally effective outwards — per face.</span>
+      </figcaption>
+    </figure>
+
+  </div>
+</div>
+
+<main>
+<div class="wrap">
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Das Prinzip</span><span lang="en">The principle</span></p>
+    <h2>
+      <span lang="de">Drei Zahlen, die alles erklären</span>
+      <span lang="en">Three numbers that explain everything</span>
+    </h2>
+
+    <div class="keys numfmt">
+      <div class="key">
+        <span class="n">2/3</span>
+        <p class="k"><span lang="de">Einwuchs</span><span lang="en">Penetration</span></p>
+        <p class="d">
+          <span lang="de">der Schichtdicke wächst unter die Anlieferoberfläche. Dieser Anteil
+          verbraucht Grundmaterial und ist nach außen maßneutral.</span>
+          <span lang="en">of the layer grows below the as-delivered surface. This share consumes
+          base material and is dimensionally neutral outwards.</span>
+        </p>
+      </div>
+      <div class="key">
+        <span class="n">1/3</span>
+        <p class="k"><span lang="de">Aufbau je Fläche</span><span lang="en">Build-up per face</span></p>
+        <p class="d">
+          <span lang="de">steht über der Anlieferoberfläche. Das ist die einzige Zahl, die das Maß
+          einer einzelnen Fläche verändert.</span>
+          <span lang="en">stands proud of the as-delivered surface. This is the only number that
+          changes the dimension of a single face.</span>
+        </p>
+      </div>
+      <div class="key">
+        <span class="n">2 ×</span>
+        <p class="k"><span lang="de">bei Durchmessern</span><span lang="en">On diameters</span></p>
+        <p class="d">
+          <span lang="de">Ein Durchmesser hat zwei gegenüberliegende Flächen. Die Änderung ist
+          deshalb doppelt so groß: 2/3 der Schichtdicke.</span>
+          <span lang="en">A diameter has two opposing faces, so the change doubles: 2/3 of the layer
+          thickness.</span>
+        </p>
+      </div>
+    </div>
+
+    <p style="margin-top:26px">
+      <span lang="de">Beim anodischen Oxidieren wird das Aluminium der Oberfläche elektrochemisch in
+      Aluminiumoxid umgewandelt. Oxid braucht mehr Platz als das Metall, aus dem es entstanden ist.
+      Die Schicht wächst deshalb in beide Richtungen: nach innen, wo sie Grundmaterial auffrisst,
+      und nach außen, wo sie aufbaut. Bei üblichem Schwefelsäure-Eloxal liegt das Verhältnis bei
+      etwa <em>2/3 zu 1/3</em>.</span>
+      <span lang="en">During anodizing, the aluminium at the surface is electrochemically converted
+      into aluminium oxide. Oxide needs more room than the metal it came from, so the layer grows in
+      both directions: inwards, consuming base material, and outwards, building up. For conventional
+      sulphuric acid anodizing the ratio is about <em>2/3 to 1/3</em>.</span>
+    </p>
+    <p>
+      <span lang="de">Wichtig: Die auf der Zeichnung angegebene Schichtdicke ist immer die
+      <strong>Gesamtschicht</strong> — so wird sie auch gemessen, per Wirbelstrom nach
+      DIN EN ISO 2360 oder im Schliffbild. Wer die Schichtdicke direkt vom Maß abzieht, rechnet
+      dreimal zu viel.</span>
+      <span lang="en">Note: the layer thickness stated on the drawing is always the
+      <strong>total layer</strong> — that is also how it is measured, by eddy current to
+      DIN EN ISO 2360 or on a micrograph. Subtracting the layer thickness straight from the
+      dimension overstates the change by a factor of three.</span>
+    </p>
+
+    <div class="note">
+      <h4><span lang="de">Ausnahme Harteloxal</span><span lang="en">Exception: hard anodizing</span></h4>
+      <p>
+        <span lang="de">Bei Harteloxal (Typ III, 25–80 µm) verschiebt sich das Verhältnis Richtung
+        <strong>50 zu 50</strong>. Dort mit halber Schichtdicke als Aufbau je Fläche und voller
+        Schichtdicke am Durchmesser rechnen.</span>
+        <span lang="en">For hard anodizing (Type III, 25–80 µm) the ratio shifts towards
+        <strong>50 / 50</strong>. Use half the layer thickness as build-up per face, and the full
+        layer thickness on a diameter.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Maßkette</span><span lang="en">Dimensional chain</span></p>
+    <h2>
+      <span lang="de">Was zwischen Zerspanung und Endmaß passiert</span>
+      <span lang="en">What happens between machining and final size</span>
+    </h2>
+    <p>
+      <span lang="de">Das Eloxieren ist nicht der einzige Schritt, der Maß nimmt oder gibt. Die
+      Vorbehandlung trägt ab, erst danach wird aufgebaut. Beide Anteile gehören in dieselbe Rechnung
+      — und sie laufen gegeneinander.</span>
+      <span lang="en">Anodizing is not the only step that takes or adds material. Pre-treatment
+      removes, and only then does the layer build. Both belong in the same calculation — and they
+      work against each other.</span>
+    </p>
+
+    <div class="chain">
+      <div class="step">
+        <span class="no">01</span>
+        <b><span lang="de">Rohmaß</span><span lang="en">Pre-anodize size</span></b>
+        <span class="txt" lang="de">Maß nach der Zerspanung, so wie das Teil angeliefert wird.</span>
+        <span class="txt" lang="en">Size after machining, as the part is delivered.</span>
+        <span class="eff">± 0 µm</span>
+      </div>
+      <div class="step">
+        <span class="no">02</span>
+        <b><span lang="de">Entfetten &amp; Beizen</span><span lang="en">Degrease &amp; etch</span></b>
+        <span class="txt" lang="de">Alkalischer Angriff, löst Aluminium. Abtrag je nach Zeit,
+        Temperatur und Legierung.</span>
+        <span class="txt" lang="en">Alkaline attack dissolves aluminium. Removal depends on time,
+        temperature and alloy.</span>
+        <span class="eff"><span lang="de">Teil wird kleiner</span><span lang="en">part gets smaller</span></span>
+      </div>
+      <div class="step">
+        <span class="no">03</span>
+        <b><span lang="de">Dekapieren</span><span lang="en">Desmutting</span></b>
+        <span class="txt" lang="de">Sauer, entfernt den Legierungsbelag. Nimmt selbst praktisch kein
+        Maß.</span>
+        <span class="txt" lang="en">Acidic, removes the alloy smut. Takes practically no material
+        itself.</span>
+        <span class="eff">≈ 0 µm</span>
+      </div>
+      <div class="step">
+        <span class="no">04</span>
+        <b><span lang="de">Eloxieren</span><span lang="en">Anodizing</span></b>
+        <span class="txt" lang="de">2/3 Einwuchs, 1/3 Aufbau — bezogen auf die Oberfläche nach dem
+        Beizen.</span>
+        <span class="txt" lang="en">2/3 penetration, 1/3 build-up — relative to the post-etch
+        surface.</span>
+        <span class="eff"><span lang="de">Teil wird größer</span><span lang="en">part gets larger</span></span>
+      </div>
+      <div class="step">
+        <span class="no">05</span>
+        <b><span lang="de">Verdichten</span><span lang="en">Sealing</span></b>
+        <span class="txt" lang="de">Heißwasser oder Kaltverdichtung. Maßlich vernachlässigbar.</span>
+        <span class="txt" lang="en">Hot water or cold sealing. Dimensionally negligible.</span>
+        <span class="eff">&lt; 1 µm</span>
+      </div>
+    </div>
+
+    <div class="formula numfmt">
+      <div class="row">
+        <span class="lhs"><span lang="de">Endmaß Fläche</span><span lang="en">Final size, face</span></span>
+        <span class="op">=</span> <span lang="de">Rohmaß</span><span lang="en">pre-anodize</span>
+        <span class="op">−</span> <span lang="de">Beizabtrag</span><span lang="en">etch removal</span>
+        <span class="op">+</span> <span lang="de">Aufbau</span><span lang="en">build-up</span>
+      </div>
+      <div class="row">
+        <span class="lhs"><span lang="de">Endmaß Durchmesser</span><span lang="en">Final size, dia.</span></span>
+        <span class="op">=</span> <span lang="de">Rohmaß</span><span lang="en">pre-anodize</span>
+        <span class="op">−</span> 2 · <span lang="de">Beizabtrag</span><span lang="en">etch removal</span>
+        <span class="op">+</span> 2 · <span lang="de">Aufbau</span><span lang="en">build-up</span>
+      </div>
+      <div class="row cmt">
+        <span lang="de">Aufbau = Schichtdicke / 3   ·   Beizabtrag je Fläche   ·   Bohrungen: Vorzeichen umgekehrt</span>
+        <span lang="en">build-up = layer thickness / 3   ·   etch removal per face   ·   bores: signs reversed</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Rechenwerte</span><span lang="en">Reference values</span></p>
+    <h2>
+      <span lang="de">Maßänderung je Schichtdicke</span>
+      <span lang="en">Dimensional change by layer thickness</span>
+    </h2>
+    <p>
+      <span lang="de">Alle Werte in µm, ohne Beizabtrag. Außenmaße wachsen, Innenmaße schrumpfen —
+      um denselben Betrag.</span>
+      <span lang="en">All values in µm, etch removal not included. External dimensions grow, internal
+      dimensions shrink — by the same amount.</span>
+    </p>
+
+    <div class="tablebox numfmt">
+      <table>
+        <thead>
+          <tr>
+            <th><span lang="de">Schicht-<br>dicke</span><span lang="en">Layer<br>thickness</span></th>
+            <th><span lang="de">Einwuchs<br>je Fläche</span><span lang="en">Penetration<br>per face</span></th>
+            <th><span lang="de">Aufbau<br>je Fläche</span><span lang="en">Build-up<br>per face</span></th>
+            <th><span lang="de">Welle /<br>Außen-<span style="font-family:var(--f-body)">Ø</span></span><span lang="en">Shaft /<br>outside dia.</span></th>
+            <th><span lang="de">Bohrung /<br>Innen-<span style="font-family:var(--f-body)">Ø</span></span><span lang="en">Bore /<br>inside dia.</span></th>
+            <th><span lang="de">Gewinde<br>Flanken-<span style="font-family:var(--f-body)">Ø</span></span><span lang="en">Thread<br>pitch dia.</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="grp"><td colspan="6"><span lang="de">Schwefelsäure-Eloxal · Verhältnis 2/3 – 1/3</span><span lang="en">Sulphuric acid anodizing · ratio 2/3 – 1/3</span></td></tr>
+          <tr><td>5 µm</td><td>3,3</td><td>1,7</td><td class="pos">+3,3</td><td class="neg">−3,3</td><td>6,7</td></tr>
+          <tr><td>10 µm</td><td>6,7</td><td>3,3</td><td class="pos">+6,7</td><td class="neg">−6,7</td><td>13,3</td></tr>
+          <tr class="hi"><td>15 µm</td><td>10,0</td><td>5,0</td><td class="pos">+10,0</td><td class="neg">−10,0</td><td>20,0</td></tr>
+          <tr><td>20 µm</td><td>13,3</td><td>6,7</td><td class="pos">+13,3</td><td class="neg">−13,3</td><td>26,7</td></tr>
+          <tr><td>25 µm</td><td>16,7</td><td>8,3</td><td class="pos">+16,7</td><td class="neg">−16,7</td><td>33,3</td></tr>
+          <tr class="grp"><td colspan="6"><span lang="de">Harteloxal · Verhältnis ca. 50 – 50</span><span lang="en">Hard anodizing · ratio approx. 50 – 50</span></td></tr>
+          <tr><td>40 µm</td><td>20,0</td><td>20,0</td><td class="pos">+40,0</td><td class="neg">−40,0</td><td>80,0</td></tr>
+          <tr><td>60 µm</td><td>30,0</td><td>30,0</td><td class="pos">+60,0</td><td class="neg">−60,0</td><td>120,0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tnote">
+      <span lang="de">Der Flankendurchmesser eines 60°-Gewindes ändert sich um rund das
+      <strong>Vierfache</strong> des Aufbaus je Fläche — die schräge Flanke projiziert den radialen
+      Aufbau auf den Durchmesser. Bei maßkritischen Gewinden immer ein Muster prüfen.</span>
+      <span lang="en">The pitch diameter of a 60° thread changes by roughly <strong>four times</strong>
+      the build-up per face — the flank angle projects the radial build-up onto the diameter. For
+      dimensionally critical threads, always check a sample first.</span>
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Geometrie</span><span lang="en">Geometry</span></p>
+    <h2>
+      <span lang="de">Wellen wachsen, Bohrungen schrumpfen</span>
+      <span lang="en">Shafts grow, bores shrink</span>
+    </h2>
+    <p>
+      <span lang="de">Die Schicht wächst immer senkrecht aus der Oberfläche heraus. Bei einer Welle
+      zeigt das nach außen, bei einer Bohrung nach innen. Der Betrag ist derselbe, das Vorzeichen
+      dreht sich — und genau hier gehen Passungen verloren.</span>
+      <span lang="en">The layer always grows perpendicular to the surface. On a shaft that points
+      outwards, in a bore it points inwards. The magnitude is identical, the sign flips — and that
+      is exactly where fits are lost.</span>
+    </p>
+
+    <figure class="numfmt">
+      <div class="svgbox">
+      <svg viewBox="0 0 1000 500" role="img"
+           aria-label="Vergleich: bei einer Welle wächst der Durchmesser um zwei Drittel der Schichtdicke, bei einer Bohrung schrumpft er um denselben Betrag.">
+        <defs>
+          <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+
+        <!-- ============ SHAFT ============ -->
+        <text x="250" y="30" class="s-t-lbl" text-anchor="middle" lang="de">Welle · Außenmaß</text>
+        <text x="250" y="30" class="s-t-lbl" text-anchor="middle" lang="en">Shaft · external</text>
+
+        <circle cx="250" cy="215" r="130" class="s-oxide-f"/>
+        <circle cx="250" cy="215" r="100" class="s-metal-f"/>
+        <circle cx="250" cy="215" r="130" class="s-oxedge"/>
+        <circle cx="250" cy="215" r="100" class="s-edge"/>
+        <circle cx="250" cy="215" r="120" class="s-dash-2"/>
+
+        <line x1="338" y1="127" x2="398" y2="86" class="s-thin"/>
+        <text x="406" y="78" class="s-t-a" font-size="13.5" lang="de">+ Aufbau</text>
+        <text x="406" y="78" class="s-t-a" font-size="13.5" lang="en">+ build-up</text>
+        <text x="406" y="96" class="s-t-s" font-size="12.5" lang="de">1/3 nach außen</text>
+        <text x="406" y="96" class="s-t-s" font-size="12.5" lang="en">1/3 outwards</text>
+
+        <text x="250" y="410" class="s-t-m" font-size="16" text-anchor="middle">Ø + 2/3 · d</text>
+        <text x="250" y="433" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">bei 15 µm: + 10 µm</text>
+        <text x="250" y="433" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">at 15 µm: + 10 µm</text>
+
+        <!-- ============ BORE ============ -->
+        <text x="750" y="30" class="s-t-lbl" text-anchor="middle" lang="de">Bohrung · Innenmaß</text>
+        <text x="750" y="30" class="s-t-lbl" text-anchor="middle" lang="en">Bore · internal</text>
+
+        <circle cx="750" cy="215" r="170" class="s-metal-f"/>
+        <circle cx="750" cy="215" r="140" class="s-oxide-f"/>
+        <circle cx="750" cy="215" r="110" class="s-hole"/>
+        <circle cx="750" cy="215" r="170" class="s-edge"/>
+        <circle cx="750" cy="215" r="140" class="s-oxedge"/>
+        <circle cx="750" cy="215" r="110" class="s-oxedge"/>
+        <circle cx="750" cy="215" r="120" class="s-dash-2"/>
+
+        <line x1="669" y1="134" x2="606" y2="86" class="s-thin"/>
+        <text x="598" y="78" class="s-t-a" font-size="13.5" text-anchor="end" lang="de">− Aufbau</text>
+        <text x="598" y="78" class="s-t-a" font-size="13.5" text-anchor="end" lang="en">− build-up</text>
+        <text x="598" y="96" class="s-t-s" font-size="12.5" text-anchor="end" lang="de">1/3 nach innen</text>
+        <text x="598" y="96" class="s-t-s" font-size="12.5" text-anchor="end" lang="en">1/3 inwards</text>
+
+        <text x="750" y="410" class="s-t-m" font-size="16" text-anchor="middle">Ø − 2/3 · d</text>
+        <text x="750" y="433" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">bei 15 µm: − 10 µm</text>
+        <text x="750" y="433" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">at 15 µm: − 10 µm</text>
+
+        <!-- ============ legend ============ -->
+        <line x1="176" y1="472" x2="212" y2="472" class="s-dash-2"/>
+        <text x="222" y="477" class="s-t-s" font-size="12.5" lang="de">Anlieferkontur</text>
+        <text x="222" y="477" class="s-t-s" font-size="12.5" lang="en">as-delivered contour</text>
+
+        <rect x="382" y="465" width="30" height="13" class="s-oxide-f"/>
+        <text x="422" y="477" class="s-t-s" font-size="12.5" lang="de">Eloxalschicht</text>
+        <text x="422" y="477" class="s-t-s" font-size="12.5" lang="en">anodic layer</text>
+
+        <rect x="574" y="465" width="30" height="13" class="s-metal-f"/>
+        <rect x="574" y="465" width="30" height="13" class="s-edge"/>
+        <text x="614" y="477" class="s-t-s" font-size="12.5" lang="de">Grundwerkstoff</text>
+        <text x="614" y="477" class="s-t-s" font-size="12.5" lang="en">base material</text>
+      </svg>
+      </div>
+      <figcaption>
+        <span lang="de"><b>Gleicher Betrag, umgekehrtes Vorzeichen.</b> Die gestrichelte Linie ist
+        jeweils die Anlieferkontur. Ein Spalt zwischen einer Welle und einer Bohrung, die
+        <b>beide</b> eloxiert werden, schließt sich deshalb um <b>4/3 der Schichtdicke</b> — bei
+        15 µm sind das 20 µm. Wer nur eines der beiden Teile in die Rechnung nimmt, unterschätzt
+        die Passung um die Hälfte.</span>
+        <span lang="en"><b>Same magnitude, opposite sign.</b> The dashed line is the as-delivered
+        contour in each case. A clearance between a shaft and a bore that are <b>both</b> anodized
+        therefore closes by <b>4/3 of the layer thickness</b> — 20 µm at a 15 µm layer. Accounting
+        for only one of the two parts underestimates the fit by half.</span>
+      </figcaption>
+    </figure>
+
+    <h3><span lang="de">Wo die Schicht nicht gleichmäßig ist</span><span lang="en">Where the layer is not uniform</span></h3>
+    <ul>
+      <li>
+        <span lang="de"><strong>Scharfe Außenkanten</strong> sehen eine höhere Stromdichte, die
+        Schicht wird dort dicker und neigt zum Ausbrechen. Kanten mit R ≥ 0,3 mm brechen.</span>
+        <span lang="en"><strong>Sharp external edges</strong> see a higher current density; the
+        layer is thicker there and prone to chipping. Break edges to R ≥ 0.3 mm.</span>
+      </li>
+      <li>
+        <span lang="de"><strong>Sacklöcher, tiefe Nuten und Innenflächen</strong> bekommen weniger
+        Stromdichte und damit deutlich weniger Schicht. Die Zeichnungsschichtdicke gilt dort nicht —
+        gut für das Maß, schlecht für den Korrosionsschutz.</span>
+        <span lang="en"><strong>Blind holes, deep grooves and internal faces</strong> see less
+        current density and therefore markedly less layer. The drawing thickness does not apply
+        there — good for the dimension, bad for corrosion protection.</span>
+      </li>
+      <li>
+        <span lang="de"><strong>Lange Bohrungen</strong> bauen am Eingang mehr Schicht auf als in
+        der Mitte. Über die Länge lässt sich deshalb nicht mit einem einzigen Korrekturwert
+        rechnen.</span>
+        <span lang="en"><strong>Long bores</strong> build more layer at the entry than in the middle.
+        A single correction value over the length is therefore not enough.</span>
+      </li>
+      <li>
+        <span lang="de"><strong>Kontaktstellen am Gestell</strong> bleiben schichtfrei. Ihre Lage
+        vorher festlegen, am besten auf einer nicht funktionalen Fläche.</span>
+        <span lang="en"><strong>Racking contact points</strong> stay bare. Agree their position in
+        advance, ideally on a non-functional face.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Werkstoff</span><span lang="en">Material</span></p>
+    <h2>
+      <span lang="de">Einfluss der Legierung</span>
+      <span lang="en">The influence of the alloy</span>
+    </h2>
+    <p>
+      <span lang="de">Eloxiert wird ausschließlich das <strong>Aluminium</strong>. Alles andere in
+      der Legierung — Kupfer, Zink, Silizium, Eisen, intermetallische Phasen — lässt sich nicht in
+      eine geschlossene Oxidschicht umwandeln. Je mehr Fremdanteil eine Legierung enthält, desto
+      weniger ihrer Oberfläche steht dem Schichtwachstum überhaupt zur Verfügung. Das verändert
+      sowohl die erreichbare Schichtdicke als auch die Streuung der Maßänderung.</span>
+      <span lang="en">Only the <strong>aluminium</strong> anodizes. Everything else in the alloy —
+      copper, zinc, silicon, iron, intermetallic phases — cannot be converted into a closed oxide
+      layer. The more of these an alloy contains, the less of its surface is available for layer
+      growth at all. This changes both the achievable thickness and the spread of the dimensional
+      change.</span>
+    </p>
+
+    <div class="tablebox">
+      <table>
+        <thead>
+          <tr>
+            <th><span lang="de">Legierungs-<br>gruppe</span><span lang="en">Alloy<br>group</span></th>
+            <th style="text-align:left"><span lang="de">Verhalten beim Eloxieren</span><span lang="en">Behaviour when anodizing</span></th>
+            <th style="text-align:left"><span lang="de">Maßverhalten</span><span lang="en">Dimensional behaviour</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1000 · 5000</td>
+            <td class="txt"><span lang="de">Rein-Al und AlMg. Gleichmäßige, klare, dichte Schicht.</span>
+              <span lang="en">Pure Al and AlMg. Uniform, clear, dense layer.</span></td>
+            <td class="txt"><span lang="de">2/3 – 1/3 trifft zu, sehr gut vorhersagbar.</span>
+              <span lang="en">2/3 – 1/3 holds, highly predictable.</span></td>
+          </tr>
+          <tr>
+            <td>6000</td>
+            <td class="txt"><span lang="de">AlMgSi. Guter Standard, bei hohem Si-Anteil leicht grau.</span>
+              <span lang="en">AlMgSi. Good standard; slightly grey at higher Si content.</span></td>
+            <td class="txt"><span lang="de">2/3 – 1/3 trifft zu, geringe Streuung.</span>
+              <span lang="en">2/3 – 1/3 holds, low spread.</span></td>
+          </tr>
+          <tr>
+            <td>2000</td>
+            <td class="txt"><span lang="de">AlCu, hochfest. Kupfer löst sich aus der Schicht heraus,
+              diese wird poröser und weicher.</span>
+              <span lang="en">AlCu, high strength. Copper dissolves out of the layer, leaving it more
+              porous and softer.</span></td>
+            <td class="txt"><span lang="de">Langsameres Wachstum, größere Streuung. Muster
+              empfohlen.</span>
+              <span lang="en">Slower growth, wider spread. Sample recommended.</span></td>
+          </tr>
+          <tr>
+            <td>7000</td>
+            <td class="txt"><span lang="de">AlZnMg(Cu), hochfest. Zink- und Kupferausscheidungen
+              stören das Schichtwachstum lokal.</span>
+              <span lang="en">AlZnMg(Cu), high strength. Zinc and copper precipitates locally disturb
+              layer growth.</span></td>
+            <td class="txt"><span lang="de">Ungleichmäßiger Aufbau, Maß streut über die Fläche.</span>
+              <span lang="en">Uneven build-up; dimension varies across the surface.</span></td>
+          </tr>
+          <tr>
+            <td><span lang="de">Guss AlSi</span><span lang="en">AlSi cast</span></td>
+            <td class="txt"><span lang="de">Silizium-Partikel oxidieren nicht und bleiben als graue
+              Einschlüsse stehen.</span>
+              <span lang="en">Silicon particles do not oxidize and remain as grey inclusions.</span></td>
+            <td class="txt"><span lang="de">Deutlich weniger Schicht als rechnerisch, Maßänderung
+              klein und unsicher.</span>
+              <span lang="en">Markedly less layer than calculated; change small and unreliable.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tnote">
+      <span lang="de">Bei hochfesten und Guss-Legierungen ist die <strong>Streuung</strong> das
+      eigentliche Problem, nicht der Mittelwert. Deshalb gilt: bei maßkritischen Teilen aus 2000er,
+      7000er oder Guss immer ein Referenzteil aus derselben Charge eloxieren und vermessen, bevor
+      die Serie läuft.</span>
+      <span lang="en">With high-strength and cast alloys, the <strong>spread</strong> is the real
+      problem, not the mean. So for dimensionally critical parts in 2000, 7000 or cast alloys,
+      always anodize and measure a reference part from the same batch before running the series.</span>
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Vorbehandlung</span><span lang="en">Pre-treatment</span></p>
+    <h2>
+      <span lang="de">Warum Beizen bei hochfesten Legierungen anders wirkt</span>
+      <span lang="en">Why etching behaves differently on high-strength alloys</span>
+    </h2>
+    <p>
+      <span lang="de">Die alkalische Beize (Natronlauge, ca. 50–60 °C) löst gezielt Aluminium. Bei
+      Standard-Knetlegierungen greift sie die Oberfläche gleichmäßig an, der Abtrag verläuft über
+      die Zeit annähernd linear und ist damit <strong>planbar</strong>: je nach Rezeptur und
+      Beizzeit typischerweise 1 bis 10 µm je Fläche.</span>
+      <span lang="en">Alkaline etching (caustic soda, approx. 50–60 °C) selectively dissolves
+      aluminium. On standard wrought alloys it attacks the surface uniformly, removal is roughly
+      linear over time and therefore <strong>plannable</strong>: typically 1 to 10 µm per face,
+      depending on bath chemistry and dwell time.</span>
+    </p>
+    <p>
+      <span lang="de">Bei hochfesten Legierungen kippt dieses Verhalten. Die Lauge löst nur das
+      Aluminium — Kupfer, Zink, Silizium und die eisenhaltigen intermetallischen Phasen bleiben
+      stehen. Sie sammeln sich als dunkler, fest haftender Belag (Smut) auf der Oberfläche und
+      <strong>decken die darunterliegende Matrix ab</strong>. Der Angriff bremst sich damit selbst
+      aus: der Abtrag flacht mit zunehmender Beizzeit ab, statt weiter anzusteigen.</span>
+      <span lang="en">On high-strength alloys this behaviour flips. The caustic only dissolves the
+      aluminium — copper, zinc, silicon and the iron-bearing intermetallic phases remain. They
+      collect as a dark, adherent smut on the surface and <strong>mask the matrix
+      underneath</strong>. The attack therefore throttles itself: removal flattens off with
+      increasing dwell time instead of continuing to rise.</span>
+    </p>
+
+    <div class="note">
+      <h4><span lang="de">Die Konsequenz fürs Maß</span><span lang="en">What this means dimensionally</span></h4>
+      <p>
+        <span lang="de">Bei Standardlegierungen <strong>kompensiert</strong> der Beizabtrag einen
+        Teil des Schichtaufbaus — die Nettoänderung fällt kleiner aus. Bei hochfesten Legierungen
+        fällt diese Kompensation weitgehend weg, weil kaum Material abgetragen wird. Das Endmaß wird
+        dort fast vollständig vom Aufbau bestimmt: <strong>das Teil wächst nahezu um den vollen
+        rechnerischen Betrag</strong>, Bohrungen laufen entsprechend eng.</span>
+        <span lang="en">On standard alloys, etch removal <strong>compensates</strong> part of the
+        build-up — the net change is smaller. On high-strength alloys this compensation largely
+        disappears because barely any material is removed. The final size is then almost entirely
+        governed by the build-up: <strong>the part grows by close to the full calculated
+        amount</strong>, and bores run correspondingly tight.</span>
+      </p>
+    </div>
+
+    <p>
+      <span lang="de">Das Dekapieren (Salpetersäure bzw. saure Beize) entfernt den Belag wieder. Es
+      ist für eine saubere Schichtbildung nötig, nimmt aber selbst praktisch kein Aluminium ab und
+      lässt sich deshalb nicht als Maßreserve einplanen.</span>
+      <span lang="en">Desmutting (nitric acid or an acidic etch) removes the smut again. It is
+      necessary for clean layer formation but takes practically no aluminium itself, so it cannot be
+      used as a dimensional allowance.</span>
+    </p>
+    <p>
+      <span lang="de">Ebenfalls maßrelevant ist die <strong>Optikanforderung</strong>. Eine
+      dekorative, gleichmäßig seidenmatte Oberfläche (E6/EV1) braucht eine lange Beize und damit
+      viel Abtrag. Maßgenaue technische Teile werden kurz gebeizt oder nur entfettet und dekapiert.
+      Beides gleichzeitig — hochwertige Optik und enge Toleranz — ist ein Zielkonflikt, der auf der
+      Zeichnung entschieden werden muss.</span>
+      <span lang="en">The <strong>appearance requirement</strong> matters dimensionally too. A
+      decorative, evenly satin-matt finish (E6/EV1) needs a long etch and therefore substantial
+      removal. Dimensionally critical technical parts are etched briefly, or only degreased and
+      desmutted. Having both at once — premium appearance and tight tolerance — is a genuine
+      conflict that has to be settled on the drawing.</span>
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Fertigungsstrategie</span><span lang="en">Manufacturing strategy</span></p>
+    <h2>
+      <span lang="de">Toleranzmitte als Ziel — und Platz zum Aufbauen</span>
+      <span lang="en">Aim for the middle of the tolerance — and leave room to build</span>
+    </h2>
+    <p>
+      <span lang="de">Das Ziel ist nicht, auf Nennmaß zu zerspanen. Das Ziel ist, dass das Teil
+      <strong>nach</strong> dem Eloxieren in der Toleranzmitte liegt. Die Vorfertigung wird deshalb
+      bewusst versetzt ausgelegt — um genau den Betrag, den die Schicht später aufbaut.</span>
+      <span lang="en">The goal is not to machine to nominal. The goal is for the part to sit in the
+      middle of the tolerance <strong>after</strong> anodizing. Pre-machining is therefore
+      deliberately offset — by exactly the amount the layer will later add.</span>
+    </p>
+
+    <figure class="numfmt">
+      <div class="svgbox">
+      <svg viewBox="0 0 1040 400" role="img"
+           aria-label="Vergleich zweier Fertigungsstrategien für eine Bohrung: auf Toleranzmitte gefertigt fällt das Teil nach dem Eloxieren aus der Toleranz, versetzt gefertigt landet es mittig.">
+        <defs>
+          <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--ink-2)"/>
+          </marker>
+        </defs>
+
+        <text x="404" y="28" class="s-t-lbl" text-anchor="middle" lang="de">unteres Grenzmaß</text>
+        <text x="404" y="28" class="s-t-lbl" text-anchor="middle" lang="en">lower limit</text>
+        <text x="602" y="28" class="s-t-lbl" text-anchor="middle" fill="var(--accent)" lang="de">Mitte</text>
+        <text x="602" y="28" class="s-t-lbl" text-anchor="middle" fill="var(--accent)" lang="en">middle</text>
+        <text x="800" y="28" class="s-t-lbl" text-anchor="middle" lang="de">oberes Grenzmaß</text>
+        <text x="800" y="28" class="s-t-lbl" text-anchor="middle" lang="en">upper limit</text>
+
+        <!-- ============ LANE A ============ -->
+        <text x="20" y="86" class="s-t-lbl">A</text>
+        <text x="20" y="108" class="s-t" font-size="14" lang="de">Auf Mitte gefertigt</text>
+        <text x="20" y="108" class="s-t" font-size="14" lang="en">Machined to middle</text>
+        <text x="20" y="128" class="s-t-s" font-size="12.5" lang="de">Aufbau nicht eingerechnet</text>
+        <text x="20" y="128" class="s-t-s" font-size="12.5" lang="en">build-up not allowed for</text>
+
+        <line x1="250" y1="106" x2="1000" y2="106" class="s-thin" stroke-dasharray="3 4"/>
+        <rect x="404" y="76" width="396" height="60" class="s-band"/>
+        <line x1="602" y1="70" x2="602" y2="142" class="s-dash-2"/>
+
+        <text x="602" y="62" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
+        <text x="602" y="62" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
+        <circle cx="602" cy="106" r="7" fill="var(--ink-2)"/>
+        <line x1="594" y1="106" x2="392" y2="106" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+
+        <line x1="336" y1="106" x2="424" y2="106" class="s-bad" stroke-width="10" opacity=".3"/>
+        <circle cx="380" cy="106" r="9" class="s-bad" stroke-width="2.5"/>
+        <polyline points="336,122 336,146 424,146 424,122" class="s-bad" stroke-width="1.2"/>
+        <text x="380" y="168" class="s-t-s" font-size="12.5" fill="var(--bad)" text-anchor="middle" lang="de">außerhalb der Toleranz</text>
+        <text x="380" y="168" class="s-t-s" font-size="12.5" fill="var(--bad)" text-anchor="middle" lang="en">out of tolerance</text>
+
+        <!-- ============ LANE B ============ -->
+        <text x="20" y="256" class="s-t-lbl">B</text>
+        <text x="20" y="278" class="s-t" font-size="14" lang="de">Versetzt gefertigt</text>
+        <text x="20" y="278" class="s-t" font-size="14" lang="en">Machined with offset</text>
+        <text x="20" y="298" class="s-t-s" font-size="12.5" lang="de">Platz zum Aufbauen</text>
+        <text x="20" y="298" class="s-t-s" font-size="12.5" lang="en">room left to build</text>
+
+        <line x1="250" y1="276" x2="1000" y2="276" class="s-thin" stroke-dasharray="3 4"/>
+        <rect x="404" y="246" width="396" height="60" class="s-band"/>
+        <line x1="602" y1="240" x2="602" y2="312" class="s-dash-2"/>
+
+        <text x="824" y="232" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
+        <text x="824" y="232" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
+        <circle cx="824" cy="276" r="7" fill="var(--ink-2)"/>
+        <line x1="816" y1="276" x2="614" y2="276" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+
+        <line x1="558" y1="276" x2="646" y2="276" class="s-good" stroke-width="10" opacity=".3"/>
+        <circle cx="602" cy="276" r="9" class="s-good" stroke-width="2.5"/>
+        <polyline points="558,292 558,316 646,316 646,292" class="s-good" stroke-width="1.2"/>
+        <text x="602" y="338" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="de">Streuung bleibt drin</text>
+        <text x="602" y="338" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="en">spread stays inside</text>
+
+        <!-- ============ legend ============ -->
+        <line x1="404" y1="378" x2="464" y2="378" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+        <text x="476" y="383" class="s-t-s" font-size="12.5" lang="de">Maßänderung durch Eloxieren — hier Bohrung, Ø − 2/3 der Schichtdicke</text>
+        <text x="476" y="383" class="s-t-s" font-size="12.5" lang="en">dimensional change from anodizing — here a bore, Ø − 2/3 of layer thickness</text>
+        <text x="20" y="383" class="s-t-lbl" lang="de">Maß größer →</text>
+        <text x="20" y="383" class="s-t-lbl" lang="en">size increases →</text>
+      </svg>
+      </div>
+      <figcaption>
+        <span lang="de"><b>Dieselbe Bohrung, zwei Fertigungsstrategien.</b> Nach rechts wird das Maß
+        größer. Der Pfeil ist in beiden Fällen identisch — das ist der Betrag, den das Eloxieren
+        wegnimmt. Nur in Lane B wurde er vorher eingeplant, deshalb landet das Teil in der Mitte und
+        die Prozessstreuung (Balken) bleibt in beide Richtungen im Toleranzfeld.</span>
+        <span lang="en"><b>The same bore, two manufacturing strategies.</b> Size increases to the
+        right. The arrow is identical in both cases — that is the amount anodizing takes away. Only
+        in lane B was it allowed for beforehand, so the part lands in the middle and the process
+        spread (bar) stays inside the tolerance field in both directions.</span>
+      </figcaption>
+    </figure>
+
+    <div class="formula numfmt">
+      <div class="row">
+        <span class="lhs"><span lang="de">Rohmaß Welle</span><span lang="en">Shaft, pre-anodize</span></span>
+        <span class="op">=</span> <span lang="de">Toleranzmitte</span><span lang="en">tolerance middle</span>
+        <span class="op">−</span> 2/3 · d <span class="op">+</span> 2 · <span lang="de">Beizabtrag</span><span lang="en">etch removal</span>
+      </div>
+      <div class="row">
+        <span class="lhs"><span lang="de">Rohmaß Bohrung</span><span lang="en">Bore, pre-anodize</span></span>
+        <span class="op">=</span> <span lang="de">Toleranzmitte</span><span lang="en">tolerance middle</span>
+        <span class="op">+</span> 2/3 · d <span class="op">−</span> 2 · <span lang="de">Beizabtrag</span><span lang="en">etch removal</span>
+      </div>
+      <div class="row cmt">
+        <span lang="de">d = Schichtdicke   ·   Beizabtrag je Fläche   ·   Harteloxal: 2/3 durch 1 ersetzen</span>
+        <span lang="en">d = layer thickness   ·   etch removal per face   ·   hard anodizing: replace 2/3 with 1</span>
+      </div>
+    </div>
+
+    <h3><span lang="de">Warum die Mitte und nicht die Grenze</span><span lang="en">Why the middle and not an edge</span></h3>
+    <p>
+      <span lang="de">Die Toleranzmitte ist die einzige Position, die in <strong>beide</strong>
+      Richtungen Reserve hat. Und Reserve wird gebraucht, denn keine der folgenden Größen ist exakt
+      konstant:</span>
+      <span lang="en">The middle of the tolerance is the only position with headroom in
+      <strong>both</strong> directions. And headroom is needed, because none of the following is
+      exactly constant:</span>
+    </p>
+    <ul>
+      <li><span lang="de">Schichtdicke über die Charge und über die Position im Gestell</span>
+          <span lang="en">layer thickness across the batch and across the position on the rack</span></li>
+      <li><span lang="de">Badtemperatur, Elektrolytalter, Aluminiumgehalt im Bad</span>
+          <span lang="en">bath temperature, electrolyte age, aluminium content in the bath</span></li>
+      <li><span lang="de">Stromdichte, abhängig von Geometrie und Beladung</span>
+          <span lang="en">current density, depending on geometry and load</span></li>
+      <li><span lang="de">Beizzeit und Beizabtrag, besonders legierungsabhängig</span>
+          <span lang="en">etch time and removal, strongly alloy-dependent</span></li>
+      <li><span lang="de">Legierungscharge und Zustand des Vormaterials</span>
+          <span lang="en">alloy batch and condition of the incoming material</span></li>
+    </ul>
+    <p>
+      <span lang="de">Wer auf eine Toleranzgrenze fertigt, hat eine dieser Reserven bereits
+      aufgebraucht, bevor das Teil überhaupt ins Bad geht.</span>
+      <span lang="en">Machining to a tolerance limit spends one of these reserves before the part
+      even enters the bath.</span>
+    </p>
+
+    <div class="note house">
+      <h4><span lang="de">Hausregel · unsere Prozesserfahrung</span><span lang="en">House rule · our process experience</span></h4>
+      <p>
+        <span lang="de">Unsere Prozessführung läuft in der Tendenz eher zur <strong>engen</strong>
+        Seite: Bohrungen und Innenmaße kommen eher an der unteren Grenze heraus, Außenmaße eher an
+        der oberen. Der Aufbau setzt sich also durch, der Beizabtrag kompensiert ihn nicht
+        vollständig.</span>
+        <span lang="en">Our process tends towards the <strong>tight</strong> side: bores and internal
+        dimensions come out nearer the lower limit, external dimensions nearer the upper. The
+        build-up dominates; etch removal does not fully compensate for it.</span>
+      </p>
+      <p>
+        <span lang="de">Die Vorfertigung sollte deshalb so ausgelegt werden, dass die Schicht
+        <strong>Platz zum Aufbauen</strong> hat:</span>
+        <span lang="en">Pre-machining should therefore be laid out so the layer has
+        <strong>room to build</strong>:</span>
+      </p>
+      <ul>
+        <li><span lang="de"><strong>Bohrungen und Innenmaße</strong> in der oberen Toleranzhälfte
+            fertigen — die Schicht führt sie zur Mitte zurück.</span>
+            <span lang="en"><strong>Bores and internal dimensions</strong> to the upper half of the
+            tolerance — the layer brings them back to the middle.</span></li>
+        <li><span lang="de"><strong>Wellen und Außenmaße</strong> in der unteren Toleranzhälfte
+            fertigen — aus demselben Grund, mit umgekehrtem Vorzeichen.</span>
+            <span lang="en"><strong>Shafts and external dimensions</strong> to the lower half of the
+            tolerance — same reasoning, opposite sign.</span></li>
+        <li><span lang="de">Im Zweifel lieber etwas <strong>mehr</strong> Platz lassen als zu wenig.
+            Ein Teil, das nach dem Eloxieren noch Luft hat, ist reparabel; eines, das zu eng geworden
+            ist, meist nicht — Nacharbeit an der Passfläche entfernt die Schicht und damit den
+            Korrosionsschutz.</span>
+            <span lang="en">When in doubt, leave <strong>more</strong> room rather than less. A part
+            that still has clearance after anodizing can be recovered; one that has gone too tight
+            usually cannot — reworking the fitting surface removes the layer and with it the
+            corrosion protection.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Rechenbeispiele</span><span lang="en">Worked examples</span></p>
+    <h2>
+      <span lang="de">Zwei Passungen, durchgerechnet</span>
+      <span lang="en">Two fits, calculated through</span>
+    </h2>
+    <p>
+      <span lang="de">Beide Beispiele mit 15 µm Schichtdicke und 2 µm Beizabtrag je Fläche. Ziel ist
+      jeweils die Toleranzmitte nach dem Eloxieren.</span>
+      <span lang="en">Both examples use a 15 µm layer and 2 µm etch removal per face. The target in
+      each case is the middle of the tolerance after anodizing.</span>
+    </p>
+
+    <div class="exs numfmt">
+      <div class="ex">
+        <h4><span lang="de">Beispiel 1 · Welle</span><span lang="en">Example 1 · shaft</span></h4>
+        <p class="title">Ø 20 h8 <span>(0 / −33 µm)</span></p>
+        <dl>
+          <dt><span lang="de">Toleranzmitte</span><span lang="en">Tolerance middle</span></dt>
+          <dd>19,9835 mm</dd>
+          <dt><span lang="de">Aufbau am Ø (2/3 · 15)</span><span lang="en">Build-up on Ø (2/3 · 15)</span></dt>
+          <dd>+ 10 µm</dd>
+          <dt><span lang="de">Beizabtrag am Ø (2 · 2)</span><span lang="en">Etch removal on Ø (2 · 2)</span></dt>
+          <dd>− 4 µm</dd>
+          <dt class="sum"><span lang="de">Rohmaß vor Eloxal</span><span lang="en">Pre-anodize size</span></dt>
+          <dd class="sum">19,9775 mm</dd>
+        </dl>
+        <p class="tnote">
+          <span lang="de">Toleranzfeld 33 µm, Nettoänderung 6 µm — die Passung ist bequem
+          beherrschbar.</span>
+          <span lang="en">Tolerance field 33 µm, net change 6 µm — the fit is comfortably
+          controllable.</span>
+        </p>
+      </div>
+
+      <div class="ex">
+        <h4><span lang="de">Beispiel 2 · Bohrung</span><span lang="en">Example 2 · bore</span></h4>
+        <p class="title">Ø 20 H7 <span>(+21 / 0 µm)</span></p>
+        <dl>
+          <dt><span lang="de">Toleranzmitte</span><span lang="en">Tolerance middle</span></dt>
+          <dd>20,0105 mm</dd>
+          <dt><span lang="de">Aufbau am Ø (2/3 · 15)</span><span lang="en">Build-up on Ø (2/3 · 15)</span></dt>
+          <dd>− 10 µm</dd>
+          <dt><span lang="de">Beizabtrag am Ø (2 · 2)</span><span lang="en">Etch removal on Ø (2 · 2)</span></dt>
+          <dd>+ 4 µm</dd>
+          <dt class="sum"><span lang="de">Rohmaß vor Eloxal</span><span lang="en">Pre-anodize size</span></dt>
+          <dd class="sum">20,0165 mm</dd>
+        </dl>
+        <p class="tnote">
+          <span lang="de">Toleranzfeld 21 µm, Nettoänderung 6 µm — die Streuung der Schichtdicke
+          frisst hier bereits einen spürbaren Teil des Feldes.</span>
+          <span lang="en">Tolerance field 21 µm, net change 6 µm — layer thickness spread already
+          eats a noticeable share of the field here.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="note numfmt">
+      <h4><span lang="de">Gegenprobe</span><span lang="en">Sanity check</span></h4>
+      <p>
+        <span lang="de">Das Rohmaß der Bohrung (20,0165 mm) liegt <strong>innerhalb</strong> des
+        H7-Feldes, das der Welle (19,9775 mm) <strong>außerhalb</strong> von h8. Das ist kein
+        Fehler: das Rohmaß muss die Zeichnungstoleranz nicht einhalten, sondern nach dem Eloxieren
+        hineinführen. Auf der Zeichnung gehört deshalb der Vermerk, ob ein Maß <strong>vor</strong>
+        oder <strong>nach</strong> der Oberflächenbehandlung gilt.</span>
+        <span lang="en">The pre-anodize bore size (20.0165 mm) sits <strong>inside</strong> the H7
+        field, the shaft (19.9775 mm) <strong>outside</strong> h8. That is not an error: the
+        pre-anodize size does not have to meet the drawing tolerance, it has to lead into it after
+        anodizing. The drawing therefore needs a note stating whether a dimension applies
+        <strong>before</strong> or <strong>after</strong> surface treatment.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Grenzfälle</span><span lang="en">Edge cases</span></p>
+    <h2>
+      <span lang="de">Wenn das Toleranzfeld nicht reicht</span>
+      <span lang="en">When the tolerance field is not enough</span>
+    </h2>
+    <p>
+      <span lang="de">Ab etwa IT6 und darunter wird es eng: eine H6-Bohrung Ø 10 hat 9 µm
+      Toleranzfeld, eine 15-µm-Schicht ändert den Durchmesser um 10 µm. Die Maßänderung ist dann
+      größer als die gesamte erlaubte Streuung. Vier Wege führen heraus:</span>
+      <span lang="en">From about IT6 downwards it gets tight: an H6 bore at Ø 10 has a 9 µm field,
+      while a 15 µm layer changes the diameter by 10 µm. The dimensional change then exceeds the
+      entire permitted spread. There are four ways out:</span>
+    </p>
+    <ol>
+      <li>
+        <span lang="de"><strong>Dünnere Schicht vereinbaren.</strong> 5 bis 8 µm reichen für viele
+        technische Anwendungen im Innenraum und halbieren die Maßänderung. Muss auf der Zeichnung
+        stehen.</span>
+        <span lang="en"><strong>Agree a thinner layer.</strong> 5 to 8 µm is enough for many indoor
+        technical applications and halves the dimensional change. Must be stated on the drawing.</span>
+      </li>
+      <li>
+        <span lang="de"><strong>Passfläche abdecken.</strong> Maskieren mit Stopfen oder Lack. Die
+        Fläche bleibt blank und damit maßhaltig — aber ohne Korrosionsschutz.</span>
+        <span lang="en"><strong>Mask the fitting surface.</strong> Plugs or stop-off lacquer. The
+        surface stays bare and therefore dimensionally stable — but unprotected.</span>
+      </li>
+      <li>
+        <span lang="de"><strong>Nach dem Eloxieren nacharbeiten.</strong> Reiben, Honen oder
+        Schleifen auf Endmaß. Entfernt die Schicht an der bearbeiteten Stelle vollständig; nur
+        sinnvoll, wenn dort kein Korrosionsschutz gefordert ist.</span>
+        <span lang="en"><strong>Rework after anodizing.</strong> Reaming, honing or grinding to
+        final size. This removes the layer completely at the machined location; only sensible where
+        no corrosion protection is required there.</span>
+      </li>
+      <li>
+        <span lang="de"><strong>Toleranz auf den eloxierten Zustand umlegen.</strong> Die sauberste
+        Lösung: die Zeichnung bemaßt den Endzustand, die Vorfertigung rechnet zurück. Genau dafür
+        sind die Formeln oben da.</span>
+        <span lang="en"><strong>Move the tolerance onto the anodized condition.</strong> The
+        cleanest solution: the drawing dimensions the finished state and pre-machining works
+        backwards. That is exactly what the formulas above are for.</span>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============================================================ -->
+  <section>
+    <p class="sec-label"><span lang="de">Checkliste</span><span lang="en">Checklist</span></p>
+    <h2>
+      <span lang="de">Was auf Zeichnung und Anfrage gehört</span>
+      <span lang="en">What belongs on the drawing and the enquiry</span>
+    </h2>
+
+    <ul class="check">
+      <li>
+        <b><span lang="de">Gilt das Maß vor oder nach dem Eloxieren?</span>
+           <span lang="en">Does the dimension apply before or after anodizing?</span></b>
+        <span lang="de">Der häufigste und teuerste Unklarheitspunkt. Ein Satz im Schriftfeld
+        genügt.</span>
+        <span lang="en">The most common and most expensive ambiguity. One line in the title block is
+        enough.</span>
+      </li>
+      <li>
+        <b><span lang="de">Schichtdicke mit Toleranz</span><span lang="en">Layer thickness with tolerance</span></b>
+        <span lang="de">Nicht nur „eloxiert“. Zum Beispiel 15 +5/−0 µm, oder eine Klasse nach
+        DIN EN ISO 7599 bzw. DIN 17611. Beachten: die Norm definiert eine
+        <strong>Mindestschichtdicke</strong> — der Istwert liegt regelmäßig darüber und baut
+        entsprechend mehr auf.</span>
+        <span lang="en">Not just “anodized”. For example 15 +5/−0 µm, or a class to DIN EN ISO 7599
+        or DIN 17611. Note: the standard defines a <strong>minimum</strong> thickness — the actual
+        value regularly sits above it and builds up accordingly more.</span>
+      </li>
+      <li>
+        <b><span lang="de">Legierung und Zustand</span><span lang="en">Alloy and temper</span></b>
+        <span lang="de">Bei 2000er, 7000er und Guss vorab abstimmen, ob die Maßtoleranz überhaupt
+        erreichbar ist.</span>
+        <span lang="en">For 2000, 7000 and cast alloys, clarify up front whether the dimensional
+        tolerance is achievable at all.</span>
+      </li>
+      <li>
+        <b><span lang="de">Funktionsflächen kennzeichnen</span><span lang="en">Mark functional surfaces</span></b>
+        <span lang="de">Passungen, Dichtflächen und Gewinde markieren — mit der Angabe, ob
+        abgedeckt, nachgearbeitet oder maßkorrigiert werden soll.</span>
+        <span lang="en">Identify fits, sealing faces and threads — and state whether they are to be
+        masked, reworked or dimensionally corrected.</span>
+      </li>
+      <li>
+        <b><span lang="de">Optikanforderung benennen</span><span lang="en">State the appearance requirement</span></b>
+        <span lang="de">Dekorativ oder technisch. Davon hängen Beizzeit und damit Abtrag ab.</span>
+        <span lang="en">Decorative or technical. This drives the etch time and therefore the removal.</span>
+      </li>
+      <li>
+        <b><span lang="de">Kontaktstellen festlegen</span><span lang="en">Define contact points</span></b>
+        <span lang="de">Gestellabdrücke sind unvermeidbar. Besser vorher eine unkritische Fläche
+        benennen, als hinterher zu diskutieren.</span>
+        <span lang="en">Racking marks are unavoidable. Better to nominate an uncritical surface in
+        advance than to discuss it afterwards.</span>
+      </li>
+      <li>
+        <b><span lang="de">Erstmuster mit Referenzteil</span><span lang="en">First article with a reference part</span></b>
+        <span lang="de">Bei enger Toleranz ein Teil aus der Serienlegierung mitlaufen lassen und vor
+        und nach dem Eloxieren messen. Das ersetzt jede Rechnung.</span>
+        <span lang="en">For tight tolerances, run one part from the production alloy through and
+        measure it before and after anodizing. That beats any calculation.</span>
+      </li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>
+      <span lang="de"><strong>Jacobi Eloxal · Wiki</strong> — Eloxalschicht, Maßprinzip. Die
+      angegebenen Verhältnisse und Abtragswerte sind Erfahrungs- und Richtwerte für
+      Schwefelsäure-Eloxal. Verbindliche Werte für ein konkretes Bauteil ergeben sich aus Legierung,
+      Geometrie und Prozessführung — im Zweifel über ein Referenzteil absichern.</span>
+      <span lang="en"><strong>Jacobi Eloxal · Wiki</strong> — Anodic layer, dimensional principle.
+      The ratios and removal figures given are empirical guide values for sulphuric acid anodizing.
+      Binding values for a specific part depend on alloy, geometry and process control — when in
+      doubt, confirm with a reference part.</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var deBtn = document.getElementById('btn-de');
+  var enBtn = document.getElementById('btn-en');
+
+  // German decimal commas become points in English.
+  var numNodes = [];
+  Array.prototype.forEach.call(document.querySelectorAll('.numfmt'), function(scope){
+    var walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, null, false);
+    var n;
+    while ((n = walker.nextNode())) {
+      if (/\d,\d/.test(n.nodeValue)) numNodes.push([n, n.nodeValue]);
+    }
+  });
+
+  function setLang(lang){
+    root.setAttribute('data-lang', lang);
+    root.setAttribute('lang', lang);
+    deBtn.setAttribute('aria-pressed', String(lang === 'de'));
+    enBtn.setAttribute('aria-pressed', String(lang === 'en'));
+    numNodes.forEach(function(entry){
+      entry[0].nodeValue = lang === 'en'
+        ? entry[1].replace(/(\d),(\d)/g, '$1.$2')
+        : entry[1];
+    });
+  }
+
+  deBtn.addEventListener('click', function(){ setLang('de'); });
+  enBtn.addEventListener('click', function(){ setLang('en'); });
+  setLang('de');
+})();
+</script>
