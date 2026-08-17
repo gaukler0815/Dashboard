@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Wikierklärung 9_04 — Maßverteilung Eloxalschicht</title>
+<style>
+/* ============================================================
+   Jacobi Eloxal · Wikierklärung — Hausvorlage (A4, Druck)
+   Farben und Typografie aus 9_03_Wikierklärung Kontaktstelle
+   ============================================================ */
+:root{
+  --navy:#0A2C57;
+  --navy-2:#114482;
+  --navy-soft:#5C7CA3;
+  --grey:#7C8798;
+  --ink:#3A4452;
+  --ink-2:#5A6572;
+  --box:#F5F7FA;
+  --box-line:#E5E9ED;
+  --cream:#FDF8F1;
+  --cream-line:#F1E2C9;
+  --orange:#B5772E;
+  --wash:#F1F4F8;
+  --teal:#7CCBD6;
+  --teal-2:#4EAFBE;
+  --teal-3:#2E8FA1;
+  --metal-a:#E3E7E9;
+  --metal-b:#B4BEC3;
+  --metal-c:#98A4AA;
+  --sans:Arial,"Liberation Sans",Helvetica,sans-serif;
+}
+@page{ size:A4; margin:0 }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  font-size:10.5px;
+  line-height:1.55;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+/* ---------- repeating page furniture ---------- */
+.page{
+  width:210mm; height:297mm; position:relative; overflow:hidden;
+  padding:9mm 15mm 0; break-after:page; background:#fff;
+}
+.page:last-child{break-after:auto}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:2}
+.pagehead img{width:46mm;height:auto;display:block}
+.contact{text-align:right;font-size:9.5px;line-height:1.5;color:var(--navy);padding-top:1mm}
+.contact b{font-weight:bold}
+.rule{
+  height:1.2px;margin:2.5mm 0 0;position:relative;z-index:2;
+  background:linear-gradient(90deg,var(--navy) 0%,#8FA3BE 55%,#E3E8EF 100%);
+}
+.watermark{
+  position:absolute; right:-52mm; bottom:6mm; width:132mm; height:132mm;
+  border:15mm solid var(--wash); border-radius:50%; z-index:0;
+}
+.pagefoot{
+  position:absolute;left:0;right:0;bottom:0;height:11mm;background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;padding:0 15mm;font-size:8.5px;z-index:3;
+}
+.pagefoot b{font-weight:bold}
+.body{position:relative;z-index:1;padding-top:6mm;height:262mm;overflow:hidden}
+
+/* ---------- title block ---------- */
+.eyebrow{
+  font-size:9.5px;font-weight:bold;letter-spacing:.19em;text-transform:uppercase;
+  color:var(--grey);margin:0 0 4mm;
+}
+h1{
+  font-size:26px;font-weight:bold;color:var(--navy);
+  margin:0 0 1.5mm;line-height:1.15;letter-spacing:-.005em;
+}
+.h1-en{font-size:15px;font-style:italic;color:var(--navy-soft);margin:0 0 5mm;line-height:1.3}
+.intro{font-size:11.5px;line-height:1.6;margin:0 0 3mm;max-width:172mm}
+.intro-en{font-size:10.5px;line-height:1.55;font-style:italic;color:var(--ink-2);margin:0;max-width:172mm}
+
+/* ---------- section headings ---------- */
+h2{
+  font-size:14px;font-weight:bold;color:var(--navy);
+  margin:8mm 0 0;line-height:1.25;
+}
+.body > h2:first-child{margin-top:0}
+.body > *:first-child{margin-top:0}
+h2 + .h2-en{font-size:10.5px;font-style:italic;color:var(--navy-soft);margin:0 0 3mm}
+h3{font-size:11.5px;font-weight:bold;color:var(--navy);margin:5mm 0 1.5mm}
+p{margin:0 0 2.5mm}
+.en{font-style:italic;color:var(--ink-2)}
+ul,ol{margin:0 0 3mm;padding-left:5mm}
+li{margin:0 0 1.2mm}
+
+/* ---------- framed illustration block ---------- */
+.figbox{
+  background:var(--box);border:1px solid var(--box-line);border-radius:3px;
+  padding:6mm 7mm 5mm;margin:5mm 0 0;break-inside:avoid;
+}
+.figbox .ft{font-size:12px;font-weight:bold;color:var(--navy);margin:0 0 1mm}
+.figbox .fs{font-size:9.5px;color:var(--grey);margin:0 0 4mm}
+.figbox svg{display:block;width:100%;height:auto}
+.figcap{
+  font-size:9.5px;line-height:1.5;color:var(--ink);margin:4mm 0 0;
+  border-top:1px solid var(--box-line);padding-top:3mm;
+}
+.figcap .en{display:block;margin-top:1mm}
+
+/* ---------- key figures ---------- */
+.keys{display:flex;gap:4mm;margin:5mm 0 0;break-inside:avoid}
+.key{
+  flex:1;background:var(--box);border:1px solid var(--box-line);border-radius:3px;
+  padding:4mm 5mm;
+}
+.key .n{font-size:24px;font-weight:bold;color:var(--navy);line-height:1;display:block}
+.key .k{font-size:9px;font-weight:bold;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--grey);margin:2mm 0 1.5mm}
+.key .d{font-size:9.5px;line-height:1.45;margin:0}
+.key .d i{color:var(--ink-2)}
+
+/* ---------- orange callout ---------- */
+.callout{
+  background:var(--cream);border:1px solid var(--cream-line);border-left:3px solid var(--orange);
+  padding:4.5mm 6mm;margin:5mm 0 0;break-inside:avoid;position:relative;
+}
+.callout .bang{
+  color:var(--orange);font-weight:bold;font-size:13px;position:absolute;left:2.6mm;top:3.6mm;
+}
+.callout p{font-size:10px;line-height:1.55;margin:0 0 2mm}
+.callout p:last-child{margin-bottom:0}
+.callout b{color:var(--navy)}
+.callout .lead{font-weight:bold;color:var(--orange)}
+.callout .en{font-size:9.5px;color:#8C7C66}
+
+/* ---------- DE | EN two-column block ---------- */
+.cols{display:flex;gap:9mm;margin:5mm 0 0}
+.col{flex:1;min-width:0}
+.col + .col{border-left:1px solid var(--box-line);padding-left:9mm;margin-left:-4mm}
+.badge{
+  display:inline-block;background:var(--navy-2);color:#fff;font-size:8.5px;font-weight:bold;
+  letter-spacing:.16em;padding:1.4mm 3mm 1.2mm;margin:0 0 3mm;
+}
+.col h3{margin-top:0}
+.col p{font-size:10px;line-height:1.55}
+
+/* ---------- tables ---------- */
+table{border-collapse:collapse;width:100%;font-size:9.5px;margin:3mm 0 0;break-inside:avoid}
+th,td{padding:1.8mm 2.5mm;text-align:right;border-bottom:1px solid var(--box-line)}
+th:first-child,td:first-child{text-align:left}
+thead th{
+  background:var(--navy);color:#fff;font-size:8.5px;font-weight:bold;
+  line-height:1.35;vertical-align:bottom;border-bottom:0;text-transform:none;
+}
+thead th i{font-weight:normal;font-size:8px;opacity:.8;display:block}
+tbody td{color:var(--ink)}
+tbody td:first-child{font-weight:bold;color:var(--navy)}
+tbody tr:nth-child(even) td{background:#FAFBFC}
+tbody tr.hi td{background:#E8EEF6;font-weight:bold}
+tbody tr.grp td{
+  background:var(--box);font-size:8.5px;font-weight:bold;color:var(--navy-soft);
+  text-align:left;letter-spacing:.05em;
+}
+tbody td.txt{text-align:left;font-weight:normal;color:var(--ink)}
+tbody td.txt i{display:block;color:var(--ink-2);font-size:9px}
+.pos{color:var(--navy);font-weight:bold}
+.neg{color:var(--orange);font-weight:bold}
+.tnote{font-size:9px;line-height:1.5;color:var(--ink-2);margin:2.5mm 0 0}
+.tnote b{color:var(--navy)}
+
+/* ---------- formulas ---------- */
+.formula{
+  background:var(--box);border:1px solid var(--box-line);border-radius:3px;
+  padding:4mm 6mm;margin:4mm 0 0;font-size:10.5px;line-height:2;break-inside:avoid;
+}
+.formula .lhs{font-weight:bold;color:var(--navy);display:inline-block;min-width:42mm}
+.formula .cmt{font-size:9px;color:var(--grey);line-height:1.5;display:block;margin-top:1.5mm}
+
+/* ---------- worked examples ---------- */
+.exs{display:flex;gap:5mm;margin:4mm 0 0;break-inside:avoid}
+.ex{flex:1;border:1px solid var(--box-line);border-top:2px solid var(--navy);padding:4mm 5mm}
+.ex .lbl{font-size:8.5px;font-weight:bold;letter-spacing:.11em;text-transform:uppercase;color:var(--grey);margin:0 0 1mm}
+.ex .t{font-size:12px;font-weight:bold;color:var(--navy);margin:0 0 3mm}
+.ex .t span{font-weight:normal;font-size:10px;color:var(--grey)}
+.ex table{margin:0}
+.ex td{padding:1.4mm 0;font-size:9.5px}
+.ex td:first-child{font-weight:normal;color:var(--ink)}
+.ex tr.sum td{border-bottom:0;border-top:1.5px solid var(--navy);font-weight:bold;color:var(--navy);padding-top:2mm}
+.ex .after{font-size:9px;color:var(--ink-2);margin:2.5mm 0 0;line-height:1.45}
+
+/* ---------- checklist ---------- */
+.check{list-style:none;padding:0;margin:4mm 0 0}
+.check li{
+  position:relative;padding:0 0 2.2mm 6mm;margin:0 0 2.2mm;
+  border-bottom:1px solid var(--box-line);break-inside:avoid;
+}
+.check li:last-child{border-bottom:0}
+.check li::before{
+  content:"";position:absolute;left:0;top:1mm;width:2.6mm;height:2.6mm;
+  border:1px solid var(--navy);
+}
+.check b{color:var(--navy);display:block;font-size:10px}
+.check span{font-size:9.5px;display:block}
+.check i{font-size:9px;color:var(--ink-2);display:block}
+
+
+/* ---------- SVG paint ---------- */
+svg text{font-family:var(--sans)}
+.s-metal{fill:url(#gMetal)}
+.s-metal-2{fill:url(#gMetal2)}
+.s-oxide{fill:url(#gOxide)}
+.s-metal-f{fill:var(--metal-a)}
+.s-oxide-f{fill:var(--teal)}
+.s-hole{fill:var(--box)}
+.s-barrier{fill:var(--teal-3)}
+.s-line{stroke:var(--navy);fill:none;stroke-width:1.6}
+.s-thin{stroke:var(--grey);fill:none;stroke-width:1}
+.s-dash{stroke:var(--navy);fill:none;stroke-width:1.6;stroke-dasharray:12 7}
+.s-dash-2{stroke:var(--ink-2);fill:none;stroke-width:1.4;stroke-dasharray:7 5}
+.s-edge{stroke:var(--metal-c);fill:none;stroke-width:1.2}
+.s-oxedge{stroke:var(--teal-3);fill:none;stroke-width:1.4}
+.s-band{fill:#E8EEF6;stroke:var(--navy-soft);stroke-width:1.2}
+.s-t   {fill:var(--navy);font-size:calc(16px * var(--sf,1))}
+.s-t-a {fill:var(--navy);font-size:calc(16px * var(--sf,1));font-weight:bold}
+.s-t-s {fill:var(--ink-2);font-size:calc(13.5px * var(--sf,1))}
+.s-t-m {fill:var(--navy);font-size:calc(14px * var(--sf,1));font-weight:bold}
+.s-t-lbl{fill:var(--grey);font-size:calc(11px * var(--sf,1));letter-spacing:.14em;
+  text-transform:uppercase;font-weight:bold}
+.s-good{stroke:#1F6B55;fill:none;stroke-width:2}
+.s-bad{stroke:var(--orange);fill:none;stroke-width:2}
+#f1{--sf:1.26}
+#f2{--sf:1.0}
+#f3{--sf:1.06}
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div class="pagehead">
+    <img src="LOGO_URI" alt="Jacobi Eloxal">
+    <div class="contact">
+      <b>+49 62 05 / 29 20 33 - 0</b><br>
+      info@jacobi-eloxal.de &nbsp;·&nbsp; www.jacobi-eloxal.de
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="watermark"></div>
+  <div class="body">
+<p class="eyebrow">Wikierklärung · Wiki Explanation · 9_04</p>
+  <h1>Wie viel Maß baut eine Eloxalschicht auf?</h1>
+  <p class="h1-en">How Much Does an Anodic Layer Add to a Dimension?</p>
+
+  <p class="intro">
+    Eine Eloxalschicht wird nicht aufgetragen, sie wird aus dem Bauteil heraus gebildet. Rund zwei
+    Drittel wachsen in das Aluminium hinein, ein Drittel baut über der Anlieferoberfläche auf.
+    Maßwirksam nach außen ist deshalb nur ein Drittel der Schichtdicke – je Fläche.
+  </p>
+  <p class="intro-en">
+    An anodic layer is not applied, it is grown out of the part itself. Roughly two thirds grow into
+    the aluminium, one third builds up above the as-delivered surface. Only one third of the layer
+    thickness is therefore dimensionally effective outwards – per face.
+  </p>
+
+  <!-- ============================================================ FIG 1 -->
+<div class="figbox">
+    <p class="ft">Eloxalschicht – Maßprinzip bei 15 µm</p>
+    <p class="fs">2/3 Einwuchs – 1/3 Aufbau bezogen auf die Anlieferoberfläche &nbsp;|&nbsp;
+      2/3 penetration – 1/3 build-up relative to the as-delivered surface</p>
+
+    <svg id="f1" viewBox="60 0 1245 690" role="img"
+         aria-label="Querschnitt durch eine 15 Mikrometer dicke Eloxalschicht: 10 Mikrometer Einwuchs unter der Anlieferoberfläche, 5 Mikrometer Aufbau darüber.">
+      <defs>
+        <linearGradient id="gMetal" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--metal-a)"/><stop offset="100%" stop-color="var(--metal-b)"/>
+        </linearGradient>
+        <linearGradient id="gMetal2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="var(--metal-b)"/><stop offset="100%" stop-color="var(--metal-c)"/>
+        </linearGradient>
+        <linearGradient id="gOxide" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--teal-2)"/><stop offset="100%" stop-color="var(--teal)"/>
+        </linearGradient>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="var(--navy)"/>
+        </marker>
+        <clipPath id="lens"><circle cx="990" cy="340" r="300"/></clipPath>
+      </defs>
+
+      <polygon points="90,310 90,580 460,580 460,430 280,430 280,310" class="s-metal"/>
+      <polygon points="460,430 460,580 580,520 580,370" class="s-metal-2"/>
+      <polygon points="90,310 280,310 400,250 210,250" class="s-oxide"/>
+      <polygon points="280,430 460,430 580,370 400,370" class="s-oxide"/>
+      <polygon points="280,310 280,430 400,370 400,250" class="s-oxide" opacity=".8"/>
+      <ellipse cx="248" cy="283" rx="46" ry="23" fill="var(--metal-c)"/>
+      <ellipse cx="248" cy="295" rx="39" ry="19" fill="var(--metal-b)"/>
+      <ellipse cx="248" cy="283" rx="46" ry="23" class="s-oxedge"/>
+      <polyline points="90,580 90,310 210,250 400,250 400,370 580,370 580,520 460,580 90,580" class="s-edge"/>
+      <polyline points="90,310 280,310 280,430 460,430 460,580" class="s-edge"/>
+      <polyline points="280,310 400,250" class="s-edge"/>
+      <polyline points="280,430 400,370" class="s-edge"/>
+      <polyline points="460,430 580,370" class="s-edge"/>
+      <text x="90" y="638" class="s-t-lbl">Bauteil, angeschnitten</text>
+      <text x="90" y="664" class="s-t-s">blaue Flächen = eloxiert · graue Flächen = Schnitt</text>
+
+      <circle cx="472" cy="398" r="16" class="s-line"/>
+      <line x1="487" y1="393" x2="692" y2="318" class="s-line" stroke-width="1.4"/>
+
+      <circle cx="990" cy="340" r="300" fill="#fff"/>
+      <g clip-path="url(#lens)">
+        <rect x="680" y="470" width="280" height="200" class="s-metal"/>
+        <rect x="680" y="170" width="280" height="300" class="s-oxide"/>
+        <g stroke="#fff" stroke-width="2" opacity=".45">
+          <line x1="700" y1="282" x2="700" y2="452"/><line x1="722" y1="282" x2="722" y2="452"/>
+          <line x1="744" y1="282" x2="744" y2="452"/><line x1="766" y1="282" x2="766" y2="452"/>
+          <line x1="788" y1="282" x2="788" y2="452"/><line x1="810" y1="282" x2="810" y2="452"/>
+          <line x1="832" y1="282" x2="832" y2="452"/><line x1="854" y1="282" x2="854" y2="452"/>
+          <line x1="876" y1="282" x2="876" y2="452"/><line x1="898" y1="282" x2="898" y2="452"/>
+          <line x1="920" y1="282" x2="920" y2="452"/><line x1="942" y1="282" x2="942" y2="452"/>
+        </g>
+        <g fill="#fff" opacity=".38">
+          <circle cx="698" cy="196" r="9"/><circle cx="730" cy="214" r="7"/><circle cx="758" cy="190" r="10"/>
+          <circle cx="792" cy="212" r="8"/><circle cx="824" cy="192" r="9"/><circle cx="856" cy="214" r="7"/>
+          <circle cx="886" cy="194" r="10"/><circle cx="920" cy="212" r="7"/><circle cx="950" cy="192" r="9"/>
+          <circle cx="712" cy="240" r="6"/><circle cx="748" cy="252" r="8"/><circle cx="782" cy="238" r="6"/>
+          <circle cx="814" cy="254" r="7"/><circle cx="848" cy="240" r="6"/><circle cx="880" cy="252" r="8"/>
+          <circle cx="914" cy="238" r="6"/><circle cx="946" cy="252" r="7"/>
+          <circle cx="700" cy="178" r="5"/><circle cx="776" cy="176" r="5"/><circle cx="850" cy="177" r="5"/>
+          <circle cx="920" cy="176" r="5"/>
+        </g>
+        <rect x="680" y="458" width="280" height="12" class="s-barrier"/>
+        <g stroke="var(--metal-c)" stroke-width="1.2" opacity=".4">
+          <line x1="680" y1="492" x2="960" y2="492"/><line x1="680" y1="514" x2="960" y2="514"/>
+          <line x1="680" y1="536" x2="960" y2="536"/><line x1="680" y1="558" x2="960" y2="558"/>
+          <line x1="680" y1="580" x2="960" y2="580"/><line x1="680" y1="602" x2="960" y2="602"/>
+          <line x1="680" y1="624" x2="960" y2="624"/><line x1="680" y1="646" x2="960" y2="646"/>
+        </g>
+        <line x1="680" y1="470" x2="960" y2="470" class="s-edge"/>
+        <line x1="960" y1="170" x2="960" y2="660" class="s-edge"/>
+      </g>
+      <circle cx="990" cy="340" r="300" fill="none" stroke="var(--navy)" stroke-width="2"/>
+
+      <line x1="700" y1="270" x2="990" y2="270" class="s-dash"/>
+      <text x="998" y="266" class="s-t">Anlieferoberfläche = 0</text>
+
+      <line x1="982" y1="172" x2="982" y2="268" class="s-line" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <line x1="940" y1="170" x2="1190" y2="170" class="s-thin" stroke-dasharray="4 4"/>
+      <text x="998" y="206" class="s-t-a">1/3 Aufbau</text>
+      <text x="998" y="228" class="s-t-m">= 5 µm</text>
+
+      <line x1="982" y1="272" x2="982" y2="468" class="s-line" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <line x1="940" y1="470" x2="1190" y2="470" class="s-thin" stroke-dasharray="4 4"/>
+      <text x="998" y="356" class="s-t-a">2/3 Einwuchs</text>
+      <text x="998" y="378" class="s-t-m">= 10 µm</text>
+
+      <line x1="1180" y1="170" x2="1180" y2="470" class="s-line" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <text x="1180" y="506" class="s-t-s" text-anchor="middle">Gesamtschichtdicke</text>
+      <text x="1180" y="528" class="s-t-m" text-anchor="middle">= 15 µm</text>
+
+      <text x="796" y="116" class="s-t-a">Eloxalschicht</text>
+      <polyline points="824,130 824,150 852,168" class="s-line" stroke-width="1.3"/>
+
+      <line x1="960" y1="464" x2="1006" y2="556" class="s-thin"/>
+      <text x="1014" y="552" class="s-t-s">Sperrschicht</text>
+
+      <circle cx="900" cy="570" r="4" fill="var(--ink-2)"/>
+      <line x1="904" y1="570" x2="990" y2="592" class="s-thin"/>
+      <text x="998" y="586" class="s-t-s">Aluminium-</text>
+      <text x="998" y="608" class="s-t-s">Grundwerkstoff</text>
+    </svg>
+
+    <p class="figcap">
+      Die Anlieferoberfläche ist der Nullpunkt. 10 µm Aluminium werden verbraucht und in Oxid
+      umgewandelt; das Oxid braucht mehr Volumen und steht 5 µm über. Die auf der Zeichnung
+      angegebene Schichtdicke ist immer die <b>Gesamtschicht</b>.
+      <span class="en">The as-delivered surface is the zero datum. 10 µm of aluminium is consumed and
+      converted into oxide; the oxide occupies more volume and stands 5 µm proud. The layer thickness
+      stated on the drawing is always the <b>total layer</b>.</span>
+    </p>
+  </div>
+  </div>
+  <div class="pagefoot">
+    <span><b>Jacobi Eloxal GmbH</b> &nbsp;|&nbsp; Eloxieren · Strahlen · Lasergravur</span>
+    <span>9_04_Wikierklärung Maßverteilung Eloxalschicht &nbsp;|&nbsp; 08/2026 &nbsp;|&nbsp; Seite <span class="pn"></span> von <span class="pt"></span></span>
+  </div>
+</section>
+
+<section class="page">
+  <div class="pagehead">
+    <img src="LOGO_URI" alt="Jacobi Eloxal">
+    <div class="contact">
+      <b>+49 62 05 / 29 20 33 - 0</b><br>
+      info@jacobi-eloxal.de &nbsp;·&nbsp; www.jacobi-eloxal.de
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="watermark"></div>
+  <div class="body">
+<div class="keys">
+    <div class="key">
+      <span class="n">2/3</span>
+      <p class="k">Einwuchs · Penetration</p>
+      <p class="d">der Schichtdicke wächst unter die Anlieferoberfläche und ist nach außen maßneutral.
+        <i>grows below the as-delivered surface; dimensionally neutral outwards.</i></p>
+    </div>
+    <div class="key">
+      <span class="n">1/3</span>
+      <p class="k">Aufbau je Fläche · Build-up</p>
+      <p class="d">steht über der Anlieferoberfläche. Nur diese Zahl verändert das Maß einer Fläche.
+        <i>stands proud of the surface. Only this number changes the size of a face.</i></p>
+    </div>
+    <div class="key">
+      <span class="n">2 ×</span>
+      <p class="k">bei Durchmessern · On diameters</p>
+      <p class="d">Ein Durchmesser hat zwei Flächen – die Änderung ist doppelt so groß: 2/3 der Schichtdicke.
+        <i>a diameter has two faces, so the change doubles: 2/3 of the layer thickness.</i></p>
+    </div>
+  </div>
+<div class="callout">
+    <span class="bang">!</span>
+    <p><span class="lead">Wichtig zu wissen:</span> Die Schichtdicke auf der Zeichnung ist die
+      Gesamtschicht – so wird sie auch gemessen, per Wirbelstrom nach DIN EN ISO 2360 oder im
+      Schliffbild. Wer sie direkt vom Maß abzieht, rechnet <b>dreimal zu viel</b>. Zusätzlich
+      definieren DIN EN ISO 7599 und DIN 17611 eine <b>Mindestschichtdicke</b>: der Istwert liegt
+      regelmäßig darüber und baut entsprechend mehr auf.</p>
+    <p class="en">Important: the layer thickness on the drawing is the total layer – that is also how
+      it is measured, by eddy current to DIN EN ISO 2360 or on a micrograph. Subtracting it straight
+      from the dimension overstates the change threefold. DIN EN ISO 7599 and DIN 17611 also define a
+      minimum thickness: the actual value regularly sits above it and builds up accordingly more.</p>
+  </div>
+<h2>Maßänderung je Schichtdicke</h2>
+  <p class="h2-en">Dimensional change by layer thickness</p>
+  <p>Alle Werte in µm, ohne Beizabtrag. Außenmaße wachsen, Innenmaße schrumpfen – um denselben Betrag.
+    <span class="en">All values in µm, etch removal not included. External dimensions grow, internal
+    dimensions shrink – by the same amount.</span></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Schichtdicke<i>Layer thickness</i></th>
+        <th>Einwuchs je Fläche<i>Penetration per face</i></th>
+        <th>Aufbau je Fläche<i>Build-up per face</i></th>
+        <th>Welle / Außen-Ø<i>Shaft / outside dia.</i></th>
+        <th>Bohrung / Innen-Ø<i>Bore / inside dia.</i></th>
+        <th>Gewinde Flanken-Ø<i>Thread pitch dia.</i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="grp"><td colspan="6">Schwefelsäure-Eloxal · Verhältnis 2/3 – 1/3 &nbsp;|&nbsp; Sulphuric acid anodizing · ratio 2/3 – 1/3</td></tr>
+      <tr><td>5 µm</td><td>3,3</td><td>1,7</td><td class="pos">+3,3</td><td class="neg">−3,3</td><td>6,7</td></tr>
+      <tr><td>10 µm</td><td>6,7</td><td>3,3</td><td class="pos">+6,7</td><td class="neg">−6,7</td><td>13,3</td></tr>
+      <tr class="hi"><td>15 µm</td><td>10,0</td><td>5,0</td><td class="pos">+10,0</td><td class="neg">−10,0</td><td>20,0</td></tr>
+      <tr><td>20 µm</td><td>13,3</td><td>6,7</td><td class="pos">+13,3</td><td class="neg">−13,3</td><td>26,7</td></tr>
+      <tr><td>25 µm</td><td>16,7</td><td>8,3</td><td class="pos">+16,7</td><td class="neg">−16,7</td><td>33,3</td></tr>
+      <tr class="grp"><td colspan="6">Harteloxal · Verhältnis ca. 50 – 50 &nbsp;|&nbsp; Hard anodizing · ratio approx. 50 – 50</td></tr>
+      <tr><td>40 µm</td><td>20,0</td><td>20,0</td><td class="pos">+40,0</td><td class="neg">−40,0</td><td>80,0</td></tr>
+      <tr><td>60 µm</td><td>30,0</td><td>30,0</td><td class="pos">+60,0</td><td class="neg">−60,0</td><td>120,0</td></tr>
+    </tbody>
+  </table>
+  <p class="tnote">
+    Der Flankendurchmesser eines 60°-Gewindes ändert sich um rund das <b>Vierfache</b> des Aufbaus je
+    Fläche – die schräge Flanke projiziert den radialen Aufbau auf den Durchmesser. Bei maßkritischen
+    Gewinden immer ein Muster prüfen.
+    <span class="en">The pitch diameter of a 60° thread changes by roughly four times the build-up per
+    face – the flank angle projects the radial build-up onto the diameter. For dimensionally critical
+    threads, always check a sample first.</span>
+  </p>
+  </div>
+  <div class="pagefoot">
+    <span><b>Jacobi Eloxal GmbH</b> &nbsp;|&nbsp; Eloxieren · Strahlen · Lasergravur</span>
+    <span>9_04_Wikierklärung Maßverteilung Eloxalschicht &nbsp;|&nbsp; 08/2026 &nbsp;|&nbsp; Seite <span class="pn"></span> von <span class="pt"></span></span>
+  </div>
+</section>
+
+<section class="page">
+  <div class="pagehead">
+    <img src="LOGO_URI" alt="Jacobi Eloxal">
+    <div class="contact">
+      <b>+49 62 05 / 29 20 33 - 0</b><br>
+      info@jacobi-eloxal.de &nbsp;·&nbsp; www.jacobi-eloxal.de
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="watermark"></div>
+  <div class="body">
+<h2>Die Maßkette: Beizen nimmt, Eloxieren gibt</h2>
+  <p class="h2-en">The dimensional chain: etching removes, anodizing adds</p>
+  <p>Das Eloxieren ist nicht der einzige Schritt, der Maß verändert. Die Vorbehandlung trägt ab, erst
+    danach wird aufgebaut. Beide Anteile gehören in dieselbe Rechnung – und sie laufen gegeneinander.
+    <span class="en">Anodizing is not the only step that changes a dimension. Pre-treatment removes,
+    and only then does the layer build. Both belong in the same calculation – and they work against
+    each other.</span></p>
+
+  <div class="formula">
+    <div><span class="lhs">Endmaß Fläche</span> = Rohmaß − Beizabtrag + Aufbau</div>
+    <div><span class="lhs">Endmaß Durchmesser</span> = Rohmaß − 2 · Beizabtrag + 2 · Aufbau</div>
+    <span class="cmt">Aufbau = Schichtdicke / 3 · Beizabtrag je Fläche · bei Bohrungen kehren sich
+      beide Vorzeichen um · Harteloxal: Aufbau = Schichtdicke / 2<br>
+      <i>build-up = layer thickness / 3 · etch removal per face · for bores both signs reverse ·
+      hard anodizing: build-up = layer thickness / 2</i></span>
+  </div>
+
+  <!-- ============================================================ FIG 2 -->
+<div class="figbox">
+    <p class="ft">Wellen wachsen, Bohrungen schrumpfen</p>
+    <p class="fs">Gleicher Betrag, umgekehrtes Vorzeichen &nbsp;|&nbsp; Same magnitude, opposite sign</p>
+
+    <svg id="f2" viewBox="0 0 1000 500" role="img"
+         aria-label="Bei einer Welle wächst der Durchmesser um zwei Drittel der Schichtdicke, bei einer Bohrung schrumpft er um denselben Betrag.">
+      <defs>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="var(--navy)"/>
+        </marker>
+      </defs>
+      <text x="250" y="30" class="s-t-lbl" text-anchor="middle">Welle · Außenmaß</text>
+      <circle cx="250" cy="215" r="130" class="s-oxide-f"/>
+      <circle cx="250" cy="215" r="100" class="s-metal-f"/>
+      <circle cx="250" cy="215" r="130" class="s-oxedge"/>
+      <circle cx="250" cy="215" r="100" class="s-edge"/>
+      <circle cx="250" cy="215" r="120" class="s-dash-2"/>
+      <line x1="338" y1="127" x2="398" y2="86" class="s-thin"/>
+      <text x="406" y="78" class="s-t-a" font-size="13.5">+ Aufbau</text>
+      <text x="406" y="96" class="s-t-s" font-size="12.5">1/3 nach außen</text>
+      <text x="250" y="410" class="s-t-m" font-size="17" text-anchor="middle">Ø + 2/3 · d</text>
+      <text x="250" y="433" class="s-t-s" font-size="12.5" text-anchor="middle">bei 15 µm: + 10 µm</text>
+
+      <text x="750" y="30" class="s-t-lbl" text-anchor="middle">Bohrung · Innenmaß</text>
+      <circle cx="750" cy="215" r="170" class="s-metal-f"/>
+      <circle cx="750" cy="215" r="140" class="s-oxide-f"/>
+      <circle cx="750" cy="215" r="110" class="s-hole"/>
+      <circle cx="750" cy="215" r="170" class="s-edge"/>
+      <circle cx="750" cy="215" r="140" class="s-oxedge"/>
+      <circle cx="750" cy="215" r="110" class="s-oxedge"/>
+      <circle cx="750" cy="215" r="120" class="s-dash-2"/>
+      <line x1="669" y1="134" x2="606" y2="86" class="s-thin"/>
+      <text x="598" y="78" class="s-t-a" font-size="13.5" text-anchor="end">− Aufbau</text>
+      <text x="598" y="96" class="s-t-s" font-size="12.5" text-anchor="end">1/3 nach innen</text>
+      <text x="750" y="410" class="s-t-m" font-size="17" text-anchor="middle">Ø − 2/3 · d</text>
+      <text x="750" y="433" class="s-t-s" font-size="12.5" text-anchor="middle">bei 15 µm: − 10 µm</text>
+
+      <line x1="176" y1="472" x2="212" y2="472" class="s-dash-2"/>
+      <text x="222" y="477" class="s-t-s" font-size="12.5">Anlieferkontur</text>
+      <rect x="382" y="465" width="30" height="13" class="s-oxide-f"/>
+      <text x="422" y="477" class="s-t-s" font-size="12.5">Eloxalschicht</text>
+      <rect x="574" y="465" width="30" height="13" class="s-metal-f"/>
+      <rect x="574" y="465" width="30" height="13" class="s-edge"/>
+      <text x="614" y="477" class="s-t-s" font-size="12.5">Grundwerkstoff</text>
+    </svg>
+
+    <p class="figcap">
+      Die gestrichelte Linie ist jeweils die Anlieferkontur. Ein Spalt zwischen einer Welle und einer
+      Bohrung, die <b>beide</b> eloxiert werden, schließt sich deshalb um <b>4/3 der Schichtdicke</b> –
+      bei 15 µm sind das 20 µm. Wer nur eines der beiden Teile in die Rechnung nimmt, unterschätzt die
+      Passung um die Hälfte.
+      <span class="en">The dashed line is the as-delivered contour in each case. A clearance between a
+      shaft and a bore that are both anodized therefore closes by 4/3 of the layer thickness – 20 µm
+      at a 15 µm layer. Accounting for only one of the two parts underestimates the fit by half.</span>
+    </p>
+  </div>
+  </div>
+  <div class="pagefoot">
+    <span><b>Jacobi Eloxal GmbH</b> &nbsp;|&nbsp; Eloxieren · Strahlen · Lasergravur</span>
+    <span>9_04_Wikierklärung Maßverteilung Eloxalschicht &nbsp;|&nbsp; 08/2026 &nbsp;|&nbsp; Seite <span class="pn"></span> von <span class="pt"></span></span>
+  </div>
+</section>
+
+<section class="page">
+  <div class="pagehead">
+    <img src="LOGO_URI" alt="Jacobi Eloxal">
+    <div class="contact">
+      <b>+49 62 05 / 29 20 33 - 0</b><br>
+      info@jacobi-eloxal.de &nbsp;·&nbsp; www.jacobi-eloxal.de
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="watermark"></div>
+  <div class="body">
+<h3>Wo die Schicht nicht gleichmäßig ist &nbsp;<span class="en" style="font-weight:normal">Where the layer is not uniform</span></h3>
+  <ul>
+    <li><b>Scharfe Außenkanten</b> sehen eine höhere Stromdichte, die Schicht wird dort dicker und
+      neigt zum Ausbrechen. Kanten mit R ≥ 0,3 mm brechen.
+      <span class="en">Sharp external edges see higher current density; break edges to R ≥ 0.3 mm.</span></li>
+    <li><b>Sacklöcher, tiefe Nuten und Innenflächen</b> bekommen weniger Stromdichte und damit deutlich
+      weniger Schicht – gut für das Maß, schlecht für den Korrosionsschutz.
+      <span class="en">Blind holes, deep grooves and internal faces see less layer – good for the
+      dimension, bad for corrosion protection.</span></li>
+    <li><b>Lange Bohrungen</b> bauen am Eingang mehr Schicht auf als in der Mitte; über die Länge
+      reicht ein einziger Korrekturwert nicht.
+      <span class="en">Long bores build more layer at the entry than in the middle.</span></li>
+    <li><b>Kontaktstellen am Gestell</b> bleiben schichtfrei – Lage vorher festlegen (siehe
+      Wikierklärung 9_03).
+      <span class="en">Racking contact points stay bare – agree their position in advance.</span></li>
+  </ul>
+<h2>Werkstoff und Vorbehandlung</h2>
+  <p class="h2-en">Material and pre-treatment</p>
+
+  <div class="cols">
+    <div class="col">
+      <span class="badge">DE</span>
+      <h3>Einfluss der Legierung</h3>
+      <p>Eloxiert wird ausschließlich das Aluminium. Alles andere in der Legierung – Kupfer, Zink,
+        Silizium, Eisen, intermetallische Phasen – lässt sich nicht in eine geschlossene Oxidschicht
+        umwandeln. Je mehr Fremdanteil eine Legierung enthält, desto weniger ihrer Oberfläche steht
+        dem Schichtwachstum zur Verfügung.</p>
+      <p>Das verändert nicht nur die erreichbare Schichtdicke, sondern vor allem die <b>Streuung</b>
+        der Maßänderung. Bei hochfesten und Guss-Legierungen ist diese Streuung das eigentliche
+        Problem, nicht der Mittelwert.</p>
+      <h3>Einfluss der Beize</h3>
+      <p>Die alkalische Beize (Natronlauge, ca. 50–60 °C) löst gezielt Aluminium. Bei Standard-Knet­
+        legierungen greift sie gleichmäßig an, der Abtrag verläuft annähernd linear über die Zeit und
+        ist damit planbar: je nach Rezeptur 1 bis 10 µm je Fläche.</p>
+      <p>Bei hochfesten Legierungen kippt dieses Verhalten. Die Lauge löst nur das Aluminium – Kupfer,
+        Zink, Silizium und die eisenhaltigen intermetallischen Phasen bleiben stehen. Sie sammeln sich
+        als dunkler, fest haftender Belag (Smut) auf der Oberfläche und decken die darunterliegende
+        Matrix ab. Der Angriff bremst sich damit selbst aus: der Abtrag flacht mit zunehmender
+        Beizzeit ab, statt weiter anzusteigen.</p>
+      <p>Das anschließende Dekapieren entfernt den Belag, nimmt aber selbst praktisch kein Aluminium
+        ab – es lässt sich nicht als Maßreserve einplanen. Maßrelevant ist außerdem die
+        Optikanforderung: eine dekorative Oberfläche (E6/EV1) braucht eine lange Beize und damit viel
+        Abtrag, maßgenaue technische Teile werden kurz gebeizt oder nur entfettet und dekapiert.</p>
+    </div>
+    <div class="col">
+      <span class="badge">EN</span>
+      <h3>Influence of the alloy</h3>
+      <p>Only the aluminium anodizes. Everything else in the alloy – copper, zinc, silicon, iron,
+        intermetallic phases – cannot be converted into a closed oxide layer. The more of these an
+        alloy contains, the less of its surface is available for layer growth.</p>
+      <p>This changes not only the achievable thickness but above all the <b>spread</b> of the
+        dimensional change. With high-strength and cast alloys that spread is the real problem, not
+        the mean value.</p>
+      <h3>Influence of the etch</h3>
+      <p>Alkaline etching (caustic soda, approx. 50–60 °C) selectively dissolves aluminium. On standard
+        wrought alloys it attacks uniformly, removal is roughly linear over time and therefore
+        plannable: 1 to 10 µm per face depending on bath chemistry.</p>
+      <p>On high-strength alloys this behaviour flips. The caustic only dissolves the aluminium –
+        copper, zinc, silicon and the iron-bearing intermetallic phases remain. They collect as a
+        dark, adherent smut on the surface and mask the matrix underneath. The attack therefore
+        throttles itself: removal flattens off with increasing dwell time instead of continuing to
+        rise.</p>
+      <p>Subsequent desmutting removes the smut but takes practically no aluminium itself – it cannot
+        be used as a dimensional allowance. The appearance requirement matters too: a decorative
+        finish (E6/EV1) needs a long etch and substantial removal, while dimensionally critical
+        technical parts are etched briefly or only degreased and desmutted.</p>
+    </div>
+  </div>
+  </div>
+  <div class="pagefoot">
+    <span><b>Jacobi Eloxal GmbH</b> &nbsp;|&nbsp; Eloxieren · Strahlen · Lasergravur</span>
+    <span>9_04_Wikierklärung Maßverteilung Eloxalschicht &nbsp;|&nbsp; 08/2026 &nbsp;|&nbsp; Seite <span class="pn"></span> von <span class="pt"></span></span>
+  </div>
+</section>
+
+<section class="page">
+  <div class="pagehead">
+    <img src="LOGO_URI" alt="Jacobi Eloxal">
+    <div class="contact">
+      <b>+49 62 05 / 29 20 33 - 0</b><br>
+      info@jacobi-eloxal.de &nbsp;·&nbsp; www.jacobi-eloxal.de
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="watermark"></div>
+  <div class="body">
+<h3 style="margin-top:0">Legierungen im Überblick <span class="en" style="font-weight:normal">Alloys at a glance</span></h3>
+<table>
+    <thead>
+      <tr>
+        <th>Legierungsgruppe<i>Alloy group</i></th>
+        <th style="text-align:left">Verhalten beim Eloxieren<i>Behaviour when anodizing</i></th>
+        <th style="text-align:left">Maßverhalten<i>Dimensional behaviour</i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1000 · 5000</td>
+        <td class="txt">Rein-Al und AlMg. Gleichmäßige, klare, dichte Schicht.<i>Pure Al and AlMg. Uniform, clear, dense layer.</i></td>
+        <td class="txt">2/3 – 1/3 trifft zu, sehr gut vorhersagbar.<i>2/3 – 1/3 holds, highly predictable.</i></td></tr>
+      <tr><td>6000</td>
+        <td class="txt">AlMgSi. Guter Standard, bei hohem Si-Anteil leicht grau.<i>AlMgSi. Good standard; slightly grey at higher Si content.</i></td>
+        <td class="txt">2/3 – 1/3 trifft zu, geringe Streuung.<i>2/3 – 1/3 holds, low spread.</i></td></tr>
+      <tr><td>2000</td>
+        <td class="txt">AlCu, hochfest. Kupfer löst sich aus der Schicht heraus, diese wird poröser und weicher.<i>AlCu, high strength. Copper dissolves out; the layer is more porous and softer.</i></td>
+        <td class="txt">Langsameres Wachstum, größere Streuung. Muster empfohlen.<i>Slower growth, wider spread. Sample recommended.</i></td></tr>
+      <tr><td>7000</td>
+        <td class="txt">AlZnMg(Cu), hochfest. Zink- und Kupferausscheidungen stören das Wachstum lokal.<i>AlZnMg(Cu), high strength. Zn and Cu precipitates locally disturb growth.</i></td>
+        <td class="txt">Ungleichmäßiger Aufbau, Maß streut über die Fläche.<i>Uneven build-up; dimension varies across the surface.</i></td></tr>
+      <tr><td>Guss AlSi</td>
+        <td class="txt">Silizium-Partikel oxidieren nicht und bleiben als graue Einschlüsse stehen.<i>Silicon particles do not oxidize and remain as grey inclusions.</i></td>
+        <td class="txt">Deutlich weniger Schicht als rechnerisch, Maßänderung klein und unsicher.<i>Markedly less layer than calculated; change small and unreliable.</i></td></tr>
+    </tbody>
+  </table>
+<div class="callout">
+    <span class="bang">!</span>
+    <p><span class="lead">Die Konsequenz fürs Maß:</span> Bei Standardlegierungen <b>kompensiert</b>
+      der Beizabtrag einen Teil des Schichtaufbaus – die Nettoänderung fällt kleiner aus. Bei
+      hochfesten Legierungen fällt diese Kompensation weitgehend weg, weil kaum Material abgetragen
+      wird. Das Endmaß wird dort fast vollständig vom Aufbau bestimmt: <b>das Teil wächst nahezu um
+      den vollen rechnerischen Betrag</b>, Bohrungen laufen entsprechend eng. Bei maßkritischen Teilen
+      aus 2000er, 7000er oder Guss deshalb immer ein Referenzteil aus derselben Charge eloxieren und
+      vermessen, bevor die Serie läuft.</p>
+    <p class="en">What this means dimensionally: on standard alloys, etch removal compensates part of
+      the build-up – the net change is smaller. On high-strength alloys this compensation largely
+      disappears because barely any material is removed. The final size is then almost entirely
+      governed by the build-up: the part grows by close to the full calculated amount, and bores run
+      correspondingly tight. For dimensionally critical parts in 2000, 7000 or cast alloys, always
+      anodize and measure a reference part from the same batch before running the series.</p>
+  </div>
+<h2>Toleranzmitte als Ziel – und Platz zum Aufbauen</h2>
+  <p class="h2-en">Aim for the middle of the tolerance – and leave room to build</p>
+  <p>Das Ziel ist nicht, auf Nennmaß zu zerspanen. Das Ziel ist, dass das Teil <b>nach</b> dem
+    Eloxieren in der Toleranzmitte liegt. Die Vorfertigung wird deshalb bewusst versetzt ausgelegt –
+    um genau den Betrag, den die Schicht später aufbaut.
+    <span class="en">The goal is not to machine to nominal. The goal is for the part to sit in the
+    middle of the tolerance after anodizing. Pre-machining is therefore deliberately offset – by
+    exactly the amount the layer will later add.</span></p>
+
+  <!-- ============================================================ FIG 3 -->
+  </div>
+  <div class="pagefoot">
+    <span><b>Jacobi Eloxal GmbH</b> &nbsp;|&nbsp; Eloxieren · Strahlen · Lasergravur</span>
+    <span>9_04_Wikierklärung Maßverteilung Eloxalschicht &nbsp;|&nbsp; 08/2026 &nbsp;|&nbsp; Seite <span class="pn"></span> von <span class="pt"></span></span>
+  </div>
+</section>
+
+<section class="page">
+  <div class="pagehead">
+    <img src="LOGO_URI" alt="Jacobi Eloxal">
+    <div class="contact">
+      <b>+49 62 05 / 29 20 33 - 0</b><br>
+      info@jacobi-eloxal.de &nbsp;·&nbsp; www.jacobi-eloxal.de
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="watermark"></div>
+  <div class="body">
+<div class="figbox">
+    <p class="ft">Dieselbe Bohrung, zwei Fertigungsstrategien</p>
+    <p class="fs">Nach rechts wird das Maß größer &nbsp;|&nbsp; Size increases to the right</p>
+
+    <svg id="f3" viewBox="0 0 1040 400" role="img"
+         aria-label="Auf Toleranzmitte gefertigt fällt das Teil nach dem Eloxieren aus der Toleranz; versetzt gefertigt landet es mittig.">
+      <defs>
+        <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="var(--ink-2)"/>
+        </marker>
+      </defs>
+      <text x="404" y="28" class="s-t-lbl" text-anchor="middle">unteres Grenzmaß</text>
+      <text x="602" y="28" class="s-t-lbl" text-anchor="middle" fill="var(--navy)">Mitte</text>
+      <text x="800" y="28" class="s-t-lbl" text-anchor="middle">oberes Grenzmaß</text>
+
+      <text x="20" y="86" class="s-t-lbl">A</text>
+      <text x="20" y="110" class="s-t" font-size="15">Auf Mitte gefertigt</text>
+      <text x="20" y="130" class="s-t-s" font-size="12.5">Aufbau nicht eingerechnet</text>
+      <line x1="250" y1="106" x2="1000" y2="106" class="s-thin" stroke-dasharray="3 4"/>
+      <rect x="404" y="76" width="396" height="60" class="s-band"/>
+      <line x1="602" y1="70" x2="602" y2="142" class="s-dash-2"/>
+      <text x="602" y="62" class="s-t-s" font-size="12.5" text-anchor="middle">Rohmaß</text>
+      <circle cx="602" cy="106" r="7" fill="var(--ink-2)"/>
+      <line x1="594" y1="106" x2="392" y2="106" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+      <line x1="336" y1="106" x2="424" y2="106" class="s-bad" stroke-width="10" opacity=".22"/>
+      <circle cx="380" cy="106" r="9" class="s-bad" stroke-width="2.5"/>
+      <polyline points="336,122 336,146 424,146 424,122" class="s-bad" stroke-width="1.2"/>
+      <text x="380" y="170" class="s-t-s" font-size="12.5" fill="var(--orange)" text-anchor="middle">außerhalb der Toleranz</text>
+
+      <text x="20" y="256" class="s-t-lbl">B</text>
+      <text x="20" y="280" class="s-t" font-size="15">Versetzt gefertigt</text>
+      <text x="20" y="300" class="s-t-s" font-size="12.5">Platz zum Aufbauen</text>
+      <line x1="250" y1="276" x2="1000" y2="276" class="s-thin" stroke-dasharray="3 4"/>
+      <rect x="404" y="246" width="396" height="60" class="s-band"/>
+      <line x1="602" y1="240" x2="602" y2="312" class="s-dash-2"/>
+      <text x="824" y="232" class="s-t-s" font-size="12.5" text-anchor="middle">Rohmaß</text>
+      <circle cx="824" cy="276" r="7" fill="var(--ink-2)"/>
+      <line x1="816" y1="276" x2="614" y2="276" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+      <line x1="558" y1="276" x2="646" y2="276" class="s-good" stroke-width="10" opacity=".22"/>
+      <circle cx="602" cy="276" r="9" class="s-good" stroke-width="2.5"/>
+      <polyline points="558,292 558,316 646,316 646,292" class="s-good" stroke-width="1.2"/>
+      <text x="602" y="340" class="s-t-s" font-size="12.5" fill="#1F6B55" text-anchor="middle">Streuung bleibt drin</text>
+
+      <line x1="404" y1="378" x2="464" y2="378" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+      <text x="476" y="383" class="s-t-s" font-size="12.5">Maßänderung durch Eloxieren – hier Bohrung, Ø − 2/3 der Schichtdicke</text>
+    </svg>
+
+    <p class="figcap">
+      Der Pfeil ist in beiden Fällen identisch – das ist der Betrag, den das Eloxieren wegnimmt. Nur
+      in Variante B wurde er vorher eingeplant, deshalb landet das Teil in der Mitte und die
+      Prozessstreuung (Balken) bleibt in beide Richtungen im Toleranzfeld.
+      <span class="en">The arrow is identical in both cases – that is the amount anodizing takes away.
+      Only in variant B was it allowed for beforehand, so the part lands in the middle and the process
+      spread (bar) stays inside the tolerance field in both directions.</span>
+    </p>
+  </div>
+<div class="formula">
+    <div><span class="lhs">Rohmaß Welle</span> = Toleranzmitte − 2/3 · d + 2 · Beizabtrag</div>
+    <div><span class="lhs">Rohmaß Bohrung</span> = Toleranzmitte + 2/3 · d − 2 · Beizabtrag</div>
+    <span class="cmt">d = Schichtdicke · Beizabtrag je Fläche · Harteloxal: 2/3 durch 1 ersetzen<br>
+      <i>d = layer thickness · etch removal per face · hard anodizing: replace 2/3 with 1</i></span>
+  </div>
+<p style="margin-top:4mm">Die Toleranzmitte ist die einzige Position mit Reserve in <b>beide</b>
+    Richtungen. Und Reserve wird gebraucht, denn keine dieser Größen ist exakt konstant: Schichtdicke
+    über Charge und Gestellposition, Badtemperatur, Elektrolytalter und Aluminiumgehalt, Stromdichte
+    je nach Geometrie und Beladung, Beizzeit und Beizabtrag, Legierungscharge und Vormaterialzustand.
+    <span class="en">The middle of the tolerance is the only position with headroom in both directions.
+    And headroom is needed, because none of these is exactly constant: layer thickness across batch and
+    rack position, bath temperature, electrolyte age and aluminium content, current density depending on
+    geometry and load, etch time and removal, alloy batch and incoming material condition.</span></p>
+  </div>
+  <div class="pagefoot">
+    <span><b>Jacobi Eloxal GmbH</b> &nbsp;|&nbsp; Eloxieren · Strahlen · Lasergravur</span>
+    <span>9_04_Wikierklärung Maßverteilung Eloxalschicht &nbsp;|&nbsp; 08/2026 &nbsp;|&nbsp; Seite <span class="pn"></span> von <span class="pt"></span></span>
+  </div>
+</section>
+
+<section class="page">
+  <div class="pagehead">
+    <img src="LOGO_URI" alt="Jacobi Eloxal">
+    <div class="contact">
+      <b>+49 62 05 / 29 20 33 - 0</b><br>
+      info@jacobi-eloxal.de &nbsp;·&nbsp; www.jacobi-eloxal.de
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="watermark"></div>
+  <div class="body">
+<div class="callout">
+    <span class="bang">!</span>
+    <p><span class="lead">Unsere Prozesserfahrung:</span> Unsere Prozessführung läuft in der Tendenz
+      eher zur <b>engen</b> Seite – Bohrungen und Innenmaße kommen eher an der unteren Grenze heraus,
+      Außenmaße eher an der oberen. Der Aufbau setzt sich durch, der Beizabtrag kompensiert ihn nicht
+      vollständig. Legen Sie die Vorfertigung deshalb so aus, dass die Schicht <b>Platz zum
+      Aufbauen</b> hat: Bohrungen und Innenmaße in der oberen Toleranzhälfte fertigen, Wellen und
+      Außenmaße in der unteren. Im Zweifel lieber etwas mehr Platz lassen als zu wenig – ein Teil, das
+      nach dem Eloxieren noch Luft hat, ist reparabel; eines, das zu eng geworden ist, meist nicht,
+      denn Nacharbeit an der Passfläche entfernt die Schicht und damit den Korrosionsschutz.</p>
+    <p class="en">Our process experience: our process tends towards the tight side – bores and internal
+      dimensions come out nearer the lower limit, external dimensions nearer the upper. The build-up
+      dominates; etch removal does not fully compensate for it. So lay out pre-machining to give the
+      layer room to build: machine bores and internal dimensions to the upper half of the tolerance,
+      shafts and external dimensions to the lower half. When in doubt, leave more room rather than
+      less – a part that still has clearance after anodizing can be recovered; one that has gone too
+      tight usually cannot, because reworking the fitting surface removes the layer and with it the
+      corrosion protection.</p>
+  </div>
+<h2>Zwei Passungen, durchgerechnet</h2>
+  <p class="h2-en">Two fits, calculated through</p>
+  <p>Beide Beispiele mit 15 µm Schichtdicke und 2 µm Beizabtrag je Fläche. Ziel ist jeweils die
+    Toleranzmitte nach dem Eloxieren.
+    <span class="en">Both examples use a 15 µm layer and 2 µm etch removal per face. The target in each
+    case is the middle of the tolerance after anodizing.</span></p>
+
+  <div class="exs">
+    <div class="ex">
+      <p class="lbl">Beispiel 1 · Welle · Shaft</p>
+      <p class="t">Ø 20 h8 <span>(0 / −33 µm)</span></p>
+      <table>
+        <tbody>
+          <tr><td>Toleranzmitte</td><td>19,9835 mm</td></tr>
+          <tr><td>Aufbau am Ø (2/3 · 15)</td><td>+ 10 µm</td></tr>
+          <tr><td>Beizabtrag am Ø (2 · 2)</td><td>− 4 µm</td></tr>
+          <tr class="sum"><td>Rohmaß vor Eloxal</td><td>19,9775 mm</td></tr>
+        </tbody>
+      </table>
+      <p class="after">Toleranzfeld 33 µm, Nettoänderung 6 µm – die Passung ist bequem beherrschbar.
+        <i class="en">Tolerance field 33 µm, net change 6 µm – comfortably controllable.</i></p>
+    </div>
+    <div class="ex">
+      <p class="lbl">Beispiel 2 · Bohrung · Bore</p>
+      <p class="t">Ø 20 H7 <span>(+21 / 0 µm)</span></p>
+      <table>
+        <tbody>
+          <tr><td>Toleranzmitte</td><td>20,0105 mm</td></tr>
+          <tr><td>Aufbau am Ø (2/3 · 15)</td><td>− 10 µm</td></tr>
+          <tr><td>Beizabtrag am Ø (2 · 2)</td><td>+ 4 µm</td></tr>
+          <tr class="sum"><td>Rohmaß vor Eloxal</td><td>20,0165 mm</td></tr>
+        </tbody>
+      </table>
+      <p class="after">Toleranzfeld 21 µm, Nettoänderung 6 µm – die Streuung der Schichtdicke frisst
+        hier bereits einen spürbaren Teil des Feldes.
+        <i class="en">Tolerance field 21 µm, net change 6 µm – layer thickness spread already eats a
+        noticeable share of the field.</i></p>
+    </div>
+  </div>
+
+  <p class="tnote">
+    <b>Gegenprobe:</b> Das Rohmaß der Bohrung (20,0165 mm) liegt innerhalb des H7-Feldes, das der Welle
+    (19,9775 mm) außerhalb von h8. Das ist kein Fehler – das Rohmaß muss die Zeichnungstoleranz nicht
+    einhalten, sondern nach dem Eloxieren hineinführen.
+    <span class="en">Sanity check: the pre-anodize bore size sits inside the H7 field, the shaft outside
+    h8. That is not an error – the pre-anodize size does not have to meet the drawing tolerance, it has
+    to lead into it after anodizing.</span>
+  </p>
+  </div>
+  <div class="pagefoot">
+    <span><b>Jacobi Eloxal GmbH</b> &nbsp;|&nbsp; Eloxieren · Strahlen · Lasergravur</span>
+    <span>9_04_Wikierklärung Maßverteilung Eloxalschicht &nbsp;|&nbsp; 08/2026 &nbsp;|&nbsp; Seite <span class="pn"></span> von <span class="pt"></span></span>
+  </div>
+</section>
+
+<section class="page">
+  <div class="pagehead">
+    <img src="LOGO_URI" alt="Jacobi Eloxal">
+    <div class="contact">
+      <b>+49 62 05 / 29 20 33 - 0</b><br>
+      info@jacobi-eloxal.de &nbsp;·&nbsp; www.jacobi-eloxal.de
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="watermark"></div>
+  <div class="body">
+<h2>Wenn das Toleranzfeld nicht reicht</h2>
+  <p class="h2-en">When the tolerance field is not enough</p>
+  <p>Ab etwa IT6 und darunter wird es eng: eine H6-Bohrung Ø 10 hat 9 µm Toleranzfeld, eine 15-µm-Schicht
+    ändert den Durchmesser um 10 µm. Die Maßänderung ist dann größer als die gesamte erlaubte Streuung.
+    Vier Wege führen heraus:
+    <span class="en">From about IT6 downwards it gets tight: an H6 bore at Ø 10 has a 9 µm field, while a
+    15 µm layer changes the diameter by 10 µm. Four ways out:</span></p>
+  <ol>
+    <li><b>Dünnere Schicht vereinbaren</b> – 5 bis 8 µm reichen für viele technische Anwendungen im
+      Innenraum und halbieren die Maßänderung. Muss auf der Zeichnung stehen.
+      <span class="en">Agree a thinner layer – 5 to 8 µm halves the change; must be on the drawing.</span></li>
+    <li><b>Passfläche abdecken</b> – Maskieren mit Stopfen oder Lack. Die Fläche bleibt blank und damit
+      maßhaltig, aber ohne Korrosionsschutz.
+      <span class="en">Mask the fitting surface – it stays bare and dimensionally stable, but unprotected.</span></li>
+    <li><b>Nach dem Eloxieren nacharbeiten</b> – Reiben, Honen oder Schleifen auf Endmaß. Entfernt die
+      Schicht an der bearbeiteten Stelle vollständig.
+      <span class="en">Rework after anodizing – removes the layer completely at that location.</span></li>
+    <li><b>Toleranz auf den eloxierten Zustand umlegen</b> – die sauberste Lösung: die Zeichnung bemaßt
+      den Endzustand, die Vorfertigung rechnet mit den Formeln oben zurück.
+      <span class="en">Move the tolerance onto the anodized condition – the drawing dimensions the
+      finished state and pre-machining works backwards.</span></li>
+  </ol>
+<h2>Checkliste für Zeichnung und Anfrage</h2>
+  <p class="h2-en">Checklist for the drawing and the enquiry</p>
+  <ul class="check">
+    <li><b>Gilt das Maß vor oder nach dem Eloxieren?</b>
+      <span>Der häufigste und teuerste Unklarheitspunkt. Ein Satz im Schriftfeld genügt.</span>
+      <i>Does the dimension apply before or after anodizing? One line in the title block is enough.</i></li>
+    <li><b>Schichtdicke mit Toleranz angeben</b>
+      <span>Nicht nur „eloxiert“ – z. B. 15 +5/−0 µm oder eine Klasse nach DIN EN ISO 7599 bzw. DIN 17611.</span>
+      <i>State the layer thickness with a tolerance, not just “anodized”.</i></li>
+    <li><b>Legierung und Zustand nennen</b>
+      <span>Bei 2000er, 7000er und Guss vorab abstimmen, ob die Maßtoleranz überhaupt erreichbar ist.</span>
+      <i>Name the alloy and temper; for high-strength and cast alloys clarify feasibility up front.</i></li>
+    <li><b>Funktionsflächen kennzeichnen</b>
+      <span>Passungen, Dichtflächen und Gewinde markieren – mit der Angabe, ob abgedeckt, nachgearbeitet
+      oder maßkorrigiert werden soll.</span>
+      <i>Mark fits, sealing faces and threads – and say whether they are masked, reworked or corrected.</i></li>
+    <li><b>Optikanforderung benennen</b>
+      <span>Dekorativ oder technisch – davon hängen Beizzeit und damit Abtrag ab.</span>
+      <i>State whether the finish is decorative or technical; this drives the etch and the removal.</i></li>
+    <li><b>Kontaktstellen festlegen</b>
+      <span>Gestellabdrücke sind unvermeidbar; besser vorher eine unkritische Fläche benennen.</span>
+      <i>Define contact points in advance on an uncritical surface.</i></li>
+    <li><b>Erstmuster mit Referenzteil</b>
+      <span>Bei enger Toleranz ein Teil aus der Serienlegierung mitlaufen lassen und vor und nach dem
+      Eloxieren messen. Das ersetzt jede Rechnung.</span>
+      <i>For tight tolerances, measure a reference part before and after anodizing. That beats any
+      calculation.</i></li>
+  </ul>
+
+  <p class="tnote" style="margin-top:6mm">
+    Die angegebenen Verhältnisse und Abtragswerte sind Erfahrungs- und Richtwerte für
+    Schwefelsäure-Eloxal. Verbindliche Werte für ein konkretes Bauteil ergeben sich aus Legierung,
+    Geometrie und Prozessführung – im Zweifel über ein Referenzteil absichern.
+    <span class="en">The ratios and removal figures given are empirical guide values for sulphuric acid
+    anodizing. Binding values for a specific part depend on alloy, geometry and process control – when
+    in doubt, confirm with a reference part.</span>
+  </p>
+  </div>
+  <div class="pagefoot">
+    <span><b>Jacobi Eloxal GmbH</b> &nbsp;|&nbsp; Eloxieren · Strahlen · Lasergravur</span>
+    <span>9_04_Wikierklärung Maßverteilung Eloxalschicht &nbsp;|&nbsp; 08/2026 &nbsp;|&nbsp; Seite <span class="pn"></span> von <span class="pt"></span></span>
+  </div>
+</section>
+
+<script>
+(function(){
+  var pages=document.querySelectorAll('.page');
+  pages.forEach(function(p,i){
+    p.querySelector('.pn').textContent=i+1;
+    p.querySelector('.pt').textContent=pages.length;
+  });
+})();
+</script>
+</body>
+</html>
