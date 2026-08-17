@@ -885,18 +885,21 @@ footer p{font-size:13.5px;color:var(--ink-3);max-width:78ch;margin:0;line-height
       <span lang="en">Aim for the middle of the tolerance — and leave room to build</span>
     </h2>
     <p>
-      <span lang="de">Das Ziel ist nicht, auf Nennmaß zu zerspanen. Das Ziel ist, dass das Teil
-      <strong>nach</strong> dem Eloxieren in der Toleranzmitte liegt. Die Vorfertigung wird deshalb
-      bewusst versetzt ausgelegt — um genau den Betrag, den die Schicht später aufbaut.</span>
-      <span lang="en">The goal is not to machine to nominal. The goal is for the part to sit in the
-      middle of the tolerance <strong>after</strong> anodizing. Pre-machining is therefore
-      deliberately offset — by exactly the amount the layer will later add.</span>
+      <span lang="de">Die einfachste und sicherste Vorgabe ist, auf <strong>Toleranzmitte</strong>
+      zu fertigen: nach dem Eloxieren bleibt dann in beide Richtungen Reserve, und das Teil liegt
+      sicher innerhalb der Toleranz. Wer das Maß gezielt an die Obergrenze legt, bleibt ebenfalls in
+      der Toleranz — das Teil wird durch den Schichtaufbau nur kleiner und wandert Richtung
+      Mitte.</span>
+      <span lang="en">The simplest and safest instruction is to machine to the <strong>middle of the
+      tolerance</strong>: after anodizing there is headroom in both directions and the part sits
+      safely inside the tolerance. Deliberately placing the dimension at the upper limit also stays
+      inside — the build-up simply makes the part smaller and moves it towards the middle.</span>
     </p>
 
     <figure class="numfmt">
       <div class="svgbox">
       <svg viewBox="0 0 1040 400" role="img"
-           aria-label="Vergleich zweier Fertigungsstrategien für eine Bohrung: auf Toleranzmitte gefertigt fällt das Teil nach dem Eloxieren aus der Toleranz, versetzt gefertigt landet es mittig.">
+           aria-label="Beide Fertigungsstrategien bleiben innerhalb der Toleranz: auf Toleranzmitte gefertigt bleibt Reserve in beide Richtungen, an der Obergrenze gefertigt wandert das Teil Richtung Mitte.">
         <defs>
           <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" fill="var(--ink-2)"/>
@@ -910,51 +913,48 @@ footer p{font-size:13.5px;color:var(--ink-3);max-width:78ch;margin:0;line-height
         <text x="800" y="28" class="s-t-lbl" text-anchor="middle" lang="de">oberes Grenzmaß</text>
         <text x="800" y="28" class="s-t-lbl" text-anchor="middle" lang="en">upper limit</text>
 
-        <!-- ============ LANE A ============ -->
+        <!-- ============ A · auf Toleranzmitte gefertigt ============ -->
         <text x="20" y="86" class="s-t-lbl">A</text>
-        <text x="20" y="108" class="s-t" font-size="14" lang="de">Auf Mitte gefertigt</text>
-        <text x="20" y="108" class="s-t" font-size="14" lang="en">Machined to middle</text>
-        <text x="20" y="128" class="s-t-s" font-size="12.5" lang="de">Aufbau nicht eingerechnet</text>
-        <text x="20" y="128" class="s-t-s" font-size="12.5" lang="en">build-up not allowed for</text>
+        <text x="44" y="86" class="s-t-lbl" fill="var(--good)" lang="de">empfohlen</text>
+        <text x="44" y="86" class="s-t-lbl" fill="var(--good)" lang="en">recommended</text>
+        <text x="20" y="110" class="s-t" font-size="14" lang="de">Auf Toleranzmitte gefertigt</text>
+        <text x="20" y="110" class="s-t" font-size="14" lang="en">Machined to the middle</text>
+        <text x="20" y="130" class="s-t-s" font-size="12.5" lang="de">Reserve in beide Richtungen</text>
+        <text x="20" y="130" class="s-t-s" font-size="12.5" lang="en">headroom in both directions</text>
 
         <line x1="250" y1="106" x2="1000" y2="106" class="s-thin" stroke-dasharray="3 4"/>
         <rect x="404" y="76" width="396" height="60" class="s-band"/>
         <line x1="602" y1="70" x2="602" y2="142" class="s-dash-2"/>
-
         <text x="602" y="62" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
         <text x="602" y="62" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
         <circle cx="602" cy="106" r="7" fill="var(--ink-2)"/>
-        <line x1="594" y1="106" x2="392" y2="106" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+        <line x1="594" y1="106" x2="514" y2="106" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+        <line x1="462" y1="106" x2="542" y2="106" class="s-good" stroke-width="10" opacity=".3"/>
+        <circle cx="502" cy="106" r="9" class="s-good" stroke-width="2.5"/>
+        <polyline points="462,122 462,146 542,146 542,122" class="s-good" stroke-width="1.2"/>
+        <text x="502" y="168" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="de">bleibt drin — Luft nach unten und nach oben</text>
+        <text x="502" y="168" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="en">stays inside — headroom below and above</text>
 
-        <line x1="336" y1="106" x2="424" y2="106" class="s-bad" stroke-width="10" opacity=".3"/>
-        <circle cx="380" cy="106" r="9" class="s-bad" stroke-width="2.5"/>
-        <polyline points="336,122 336,146 424,146 424,122" class="s-bad" stroke-width="1.2"/>
-        <text x="380" y="168" class="s-t-s" font-size="12.5" fill="var(--bad)" text-anchor="middle" lang="de">außerhalb der Toleranz</text>
-        <text x="380" y="168" class="s-t-s" font-size="12.5" fill="var(--bad)" text-anchor="middle" lang="en">out of tolerance</text>
-
-        <!-- ============ LANE B ============ -->
+        <!-- ============ B · an der Obergrenze gefertigt ============ -->
         <text x="20" y="256" class="s-t-lbl">B</text>
-        <text x="20" y="278" class="s-t" font-size="14" lang="de">Versetzt gefertigt</text>
-        <text x="20" y="278" class="s-t" font-size="14" lang="en">Machined with offset</text>
-        <text x="20" y="298" class="s-t-s" font-size="12.5" lang="de">Platz zum Aufbauen</text>
-        <text x="20" y="298" class="s-t-s" font-size="12.5" lang="en">room left to build</text>
+        <text x="20" y="280" class="s-t" font-size="14" lang="de">An der Obergrenze gefertigt</text>
+        <text x="20" y="280" class="s-t" font-size="14" lang="en">Machined at the upper limit</text>
+        <text x="20" y="300" class="s-t-s" font-size="12.5" lang="de">ebenfalls in der Toleranz</text>
+        <text x="20" y="300" class="s-t-s" font-size="12.5" lang="en">also inside the tolerance</text>
 
         <line x1="250" y1="276" x2="1000" y2="276" class="s-thin" stroke-dasharray="3 4"/>
         <rect x="404" y="246" width="396" height="60" class="s-band"/>
         <line x1="602" y1="240" x2="602" y2="312" class="s-dash-2"/>
+        <text x="800" y="232" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
+        <text x="800" y="232" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
+        <circle cx="800" cy="276" r="7" fill="var(--ink-2)"/>
+        <line x1="792" y1="276" x2="712" y2="276" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+        <line x1="660" y1="276" x2="740" y2="276" class="s-good" stroke-width="10" opacity=".3"/>
+        <circle cx="700" cy="276" r="9" class="s-good" stroke-width="2.5"/>
+        <polyline points="660,292 660,316 740,316 740,292" class="s-good" stroke-width="1.2"/>
+        <text x="700" y="338" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="de">bleibt drin — das Teil wird kleiner</text>
+        <text x="700" y="338" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="en">stays inside — the part gets smaller</text>
 
-        <text x="824" y="232" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
-        <text x="824" y="232" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
-        <circle cx="824" cy="276" r="7" fill="var(--ink-2)"/>
-        <line x1="816" y1="276" x2="614" y2="276" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
-
-        <line x1="558" y1="276" x2="646" y2="276" class="s-good" stroke-width="10" opacity=".3"/>
-        <circle cx="602" cy="276" r="9" class="s-good" stroke-width="2.5"/>
-        <polyline points="558,292 558,316 646,316 646,292" class="s-good" stroke-width="1.2"/>
-        <text x="602" y="338" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="de">Streuung bleibt drin</text>
-        <text x="602" y="338" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="en">spread stays inside</text>
-
-        <!-- ============ legend ============ -->
         <line x1="404" y1="378" x2="464" y2="378" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
         <text x="476" y="383" class="s-t-s" font-size="12.5" lang="de">Maßänderung durch Eloxieren — hier Bohrung, Ø − 2/3 der Schichtdicke</text>
         <text x="476" y="383" class="s-t-s" font-size="12.5" lang="en">dimensional change from anodizing — here a bore, Ø − 2/3 of layer thickness</text>
@@ -964,13 +964,15 @@ footer p{font-size:13.5px;color:var(--ink-3);max-width:78ch;margin:0;line-height
       </div>
       <figcaption>
         <span lang="de"><b>Dieselbe Bohrung, zwei Fertigungsstrategien.</b> Nach rechts wird das Maß
-        größer. Der Pfeil ist in beiden Fällen identisch — das ist der Betrag, den das Eloxieren
-        wegnimmt. Nur in Lane B wurde er vorher eingeplant, deshalb landet das Teil in der Mitte und
-        die Prozessstreuung (Balken) bleibt in beide Richtungen im Toleranzfeld.</span>
+        größer. Der Pfeil ist in beiden Fällen identisch — das ist der Betrag, den das Eloxieren am
+        Durchmesser wegnimmt. Bei üblichen Toleranzfeldern bleibt das Teil in <b>beiden</b> Fällen
+        sicher innerhalb der Toleranz: auf Toleranzmitte gefertigt behält es Reserve nach unten und
+        nach oben, an der Obergrenze gefertigt wandert es durch den Schichtaufbau Richtung Mitte.</span>
         <span lang="en"><b>The same bore, two manufacturing strategies.</b> Size increases to the
-        right. The arrow is identical in both cases — that is the amount anodizing takes away. Only
-        in lane B was it allowed for beforehand, so the part lands in the middle and the process
-        spread (bar) stays inside the tolerance field in both directions.</span>
+        right. The arrow is identical in both cases — that is the amount anodizing takes off the
+        diameter. With normal tolerance fields the part stays safely inside the tolerance <b>either
+        way</b>: machined to the middle it keeps headroom below and above; machined at the upper
+        limit the build-up carries it towards the middle.</span>
       </figcaption>
     </figure>
 
