@@ -9,7 +9,7 @@ const logo = fs.readFileSync(path.join(here, '.logo-data-uri.txt'), 'utf8').trim
 // The hero illustration: use the supplied artwork if it is present in wiki/assets/,
 // otherwise fall back to the inline SVG recreation that ships in the HTML.
 const MIME = { '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp' };
-const hero = ['eloxal-massprinzip.png','eloxal-massprinzip.jpg','eloxal-massprinzip.jpeg','eloxal-massprinzip.webp']
+const hero = ['eloxal-massprinzip.jpg','eloxal-massprinzip.jpeg','eloxal-massprinzip.png','eloxal-massprinzip.webp']
   .map(f => path.join(here, 'assets', f))
   .find(fs.existsSync);
 
@@ -20,6 +20,8 @@ if (hero) {
               fs.readFileSync(hero).toString('base64');
   // The artwork already carries the German title and subtitle, so only the
   // English subtitle line is kept underneath it.
+  html = html.replace('<div class="figbox">\n    <!--HERO:START-->',
+                      '<div class="figbox photo">\n    <!--HERO:START-->');
   html = html.replace(
     /<!--HERO:START-->[\s\S]*?<!--HERO:END-->/,
     `<img class="heroimg" src="${uri}" alt="Eloxalschicht – Maßprinzip bei 15 µm">\n` +
