@@ -898,11 +898,17 @@ footer p{font-size:13.5px;color:var(--ink-3);max-width:78ch;margin:0;line-height
 
     <figure class="numfmt">
       <div class="svgbox">
-      <svg viewBox="0 0 1040 400" role="img"
-           aria-label="Beide Fertigungsstrategien bleiben innerhalb der Toleranz: auf Toleranzmitte gefertigt bleibt Reserve in beide Richtungen, an der Obergrenze gefertigt wandert das Teil Richtung Mitte.">
+      <svg viewBox="0 0 1040 430" role="img"
+           aria-label="Auf Toleranzmitte gefertigt bleibt in beide Richtungen Spielraum; an der Obergrenze gefertigt bleibt das Teil zwar in der Toleranz, nach rechts ist aber sofort kein Spielraum mehr.">
         <defs>
           <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" fill="var(--ink-2)"/>
+          </marker>
+          <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--good)"/>
+          </marker>
+          <marker id="aro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--warn)"/>
           </marker>
         </defs>
 
@@ -924,9 +930,11 @@ footer p{font-size:13.5px;color:var(--ink-3);max-width:78ch;margin:0;line-height
 
         <line x1="250" y1="106" x2="1000" y2="106" class="s-thin" stroke-dasharray="3 4"/>
         <rect x="404" y="76" width="396" height="60" class="s-band"/>
-        <line x1="602" y1="70" x2="602" y2="142" class="s-dash-2"/>
-        <text x="602" y="62" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
-        <text x="602" y="62" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
+        <line x1="602" y1="52" x2="602" y2="142" class="s-dash-2"/>
+        <text x="602" y="44" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
+        <text x="602" y="44" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
+        <line x1="596" y1="64" x2="416" y2="64" class="s-good" stroke-width="1.6" marker-end="url(#arg)"/>
+        <line x1="608" y1="64" x2="788" y2="64" class="s-good" stroke-width="1.6" marker-end="url(#arg)"/>
         <circle cx="602" cy="106" r="7" fill="var(--ink-2)"/>
         <line x1="594" y1="106" x2="514" y2="106" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
         <line x1="462" y1="106" x2="542" y2="106" class="s-good" stroke-width="10" opacity=".3"/>
@@ -945,8 +953,14 @@ footer p{font-size:13.5px;color:var(--ink-3);max-width:78ch;margin:0;line-height
         <line x1="250" y1="276" x2="1000" y2="276" class="s-thin" stroke-dasharray="3 4"/>
         <rect x="404" y="246" width="396" height="60" class="s-band"/>
         <line x1="602" y1="240" x2="602" y2="312" class="s-dash-2"/>
-        <text x="800" y="232" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
-        <text x="800" y="232" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
+        <rect x="800" y="226" width="80" height="14" fill="var(--warn)" opacity=".16"/>
+        <line x1="800" y1="220" x2="800" y2="246" class="s-dash-2"/>
+        <text x="800" y="212" class="s-t-s" font-size="12.5" text-anchor="middle" lang="de">Rohmaß</text>
+        <text x="800" y="212" class="s-t-s" font-size="12.5" text-anchor="middle" lang="en">pre-anodize</text>
+        <line x1="794" y1="233" x2="416" y2="233" class="s-good" stroke-width="1.6" marker-end="url(#arg)"/>
+        <line x1="806" y1="233" x2="870" y2="233" stroke="var(--warn)" fill="none" stroke-width="1.6" marker-end="url(#aro)"/>
+        <text x="888" y="238" class="s-t-s" font-size="12.5" fill="var(--warn)" lang="de">außerhalb</text>
+        <text x="888" y="238" class="s-t-s" font-size="12.5" fill="var(--warn)" lang="en">outside</text>
         <circle cx="800" cy="276" r="7" fill="var(--ink-2)"/>
         <line x1="792" y1="276" x2="712" y2="276" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
         <line x1="660" y1="276" x2="740" y2="276" class="s-good" stroke-width="10" opacity=".3"/>
@@ -955,24 +969,30 @@ footer p{font-size:13.5px;color:var(--ink-3);max-width:78ch;margin:0;line-height
         <text x="700" y="338" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="de">bleibt drin — das Teil wird kleiner</text>
         <text x="700" y="338" class="s-t-s" font-size="12.5" fill="var(--good)" text-anchor="middle" lang="en">stays inside — the part gets smaller</text>
 
-        <line x1="404" y1="378" x2="464" y2="378" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
-        <text x="476" y="383" class="s-t-s" font-size="12.5" lang="de">Maßänderung durch Eloxieren — hier Bohrung, Ø − 2/3 der Schichtdicke</text>
-        <text x="476" y="383" class="s-t-s" font-size="12.5" lang="en">dimensional change from anodizing — here a bore, Ø − 2/3 of layer thickness</text>
-        <text x="20" y="383" class="s-t-lbl" lang="de">Maß größer →</text>
-        <text x="20" y="383" class="s-t-lbl" lang="en">size increases →</text>
+        <!-- ============ Legende ============ -->
+        <line x1="404" y1="376" x2="464" y2="376" class="s-thin" stroke-width="1.6" marker-end="url(#ar3)"/>
+        <text x="476" y="381" class="s-t-s" font-size="12.5" lang="de">Maßänderung durch Eloxieren — hier Bohrung, Ø − 2/3 der Schichtdicke</text>
+        <text x="476" y="381" class="s-t-s" font-size="12.5" lang="en">dimensional change from anodizing — here a bore, Ø − 2/3 of layer thickness</text>
+        <line x1="404" y1="404" x2="464" y2="404" class="s-good" stroke-width="1.6" marker-start="url(#arg)" marker-end="url(#arg)"/>
+        <text x="476" y="409" class="s-t-s" font-size="12.5" lang="de">Spielraum des Rohmaßes bis zur Toleranzgrenze</text>
+        <text x="476" y="409" class="s-t-s" font-size="12.5" lang="en">room left for the pre-anodize dimension before the limit</text>
+        <text x="20" y="381" class="s-t-lbl" lang="de">Maß größer →</text>
+        <text x="20" y="381" class="s-t-lbl" lang="en">size increases →</text>
       </svg>
       </div>
       <figcaption>
         <span lang="de"><b>Dieselbe Bohrung, zwei Fertigungsstrategien.</b> Nach rechts wird das Maß
-        größer. Der Pfeil ist in beiden Fällen identisch — das ist der Betrag, den das Eloxieren am
-        Durchmesser wegnimmt. Bei üblichen Toleranzfeldern bleibt das Teil in <b>beiden</b> Fällen
-        sicher innerhalb der Toleranz: auf Toleranzmitte gefertigt behält es Reserve nach unten und
-        nach oben, an der Obergrenze gefertigt wandert es durch den Schichtaufbau Richtung Mitte.</span>
+        größer. Der graue Pfeil ist in beiden Fällen identisch — das ist der Betrag, den das
+        Eloxieren am Durchmesser wegnimmt, und beide Varianten bleiben <b>innerhalb der
+        Toleranz</b>. Der Unterschied liegt im Spielraum des Rohmaßes (grüne Pfeile): auf
+        Toleranzmitte gefertigt darf das Rohmaß nach beiden Seiten abweichen, an der Obergrenze
+        gefertigt ist nach rechts sofort Schluss — jede Abweichung nach oben liegt außerhalb.</span>
         <span lang="en"><b>The same bore, two manufacturing strategies.</b> Size increases to the
-        right. The arrow is identical in both cases — that is the amount anodizing takes off the
-        diameter. With normal tolerance fields the part stays safely inside the tolerance <b>either
-        way</b>: machined to the middle it keeps headroom below and above; machined at the upper
-        limit the build-up carries it towards the middle.</span>
+        right. The grey arrow is identical in both cases — that is the amount anodizing takes off
+        the diameter, and both variants stay <b>inside the tolerance</b>. The difference is the room
+        left for the pre-anodize dimension (green arrows): machined to the middle it may deviate
+        either way; machined at the upper limit there is nothing left to the right — any deviation
+        upwards falls outside.</span>
       </figcaption>
     </figure>
 
